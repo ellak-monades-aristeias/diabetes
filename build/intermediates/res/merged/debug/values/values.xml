@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- From: file:/home/pmanousi/git/diabetes/res/values/dimens.xml -->
+    <eat-comment/>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="activity_vertical_margin">16dp</dimen>
+    <dimen name="domain_label_font_size">13dp</dimen>
+    <dimen name="domain_tick_label_font_size">15dp</dimen>
+    <dimen name="legend_text_font_size">20dp</dimen>
+    <dimen name="pie_segment_label_font_size">10dp</dimen>
+    <dimen name="range_label_font_size">13dp</dimen>
+    <dimen name="range_tick_label_font_size">15dp</dimen>
+    <dimen name="title_font_size">20dp</dimen>
+    <!-- From: file:/home/pmanousi/git/diabetes/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="action_settings">Settings</string>
+    <string name="app_name">diabetes</string>
+    <string name="blood_glucose_stats">Blood Glucose Stats</string>
+    <string name="blood_measurements">Blood Measurements</string>
+    <string name="close">Close</string>
+    <string name="data_of_a_blood_glucose_measurement_">Data of a blood glucose measurement.</string>
+    <string name="display_charts_of_measurements_">Display charts of measurements.</string>
+    <string name="glucoseTitle">Glucose</string>
+    <string name="nutrition_information">Nutrition Information</string>
+    <string name="timesTitle">Time</string>
+    <string name="title_activity_nutrition">Nutrition</string>
+    <string name="title_activity_plot">PlotActivity</string>
+    <string name="title_activity_workout">Workout Activity</string>
+    <string name="workout_information">Workout Information</string>
+    <!-- From: file:/home/pmanousi/git/diabetes/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="AppBaseTheme" parent="android:Theme.Light">
+        <!--
+            Theme customizations available in newer API levels can go in
+            res/values-vXX/styles.xml, while customizations related to
+            backward-compatibility can go here.
+        -->
+    </style>
+    <style name="AppTheme" parent="AppBaseTheme">
+        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+    </style>
+</resources>

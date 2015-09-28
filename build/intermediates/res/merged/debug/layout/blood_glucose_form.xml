@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:contentDescription="@string/data_of_a_blood_glucose_measurement_" >
+
+    <DatePicker
+        android:id="@+id/datePicker"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content" />
+    
+    <FrameLayout
+        android:id="@+id/titles"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/datePicker" >
+        
+        <FrameLayout 
+        android:id="@+id/lefts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|left" >
+        >
+        <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:text="@string/timesTitle"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <TimePicker
+	        android:id="@+id/timePicker"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content" 
+	        android:layout_gravity="bottom"
+	        android:layout_margin="20sp" />
+        </FrameLayout>
+        
+        <FrameLayout 
+        android:id="@+id/rights"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal|right" >
+        >
+        <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+	        android:text="@string/glucoseTitle"
+	        android:textAppearance="?android:attr/textAppearanceSmall" />
+        <NumberPicker
+	        android:id="@+id/measurement"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20sp" />
+        </FrameLayout>
+    </FrameLayout>
+
+</RelativeLayout><!-- From: file:/home/pmanousi/git/diabetes/res/layout/blood_glucose_form.xml -->

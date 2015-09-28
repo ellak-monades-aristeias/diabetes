@@ -1,0 +1,52 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.diabetes.MainActivity" >
+
+    <Button
+        android:id="@+id/buttonBloodMeasurements"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:text="@string/blood_measurements" />
+
+    <Button
+        android:id="@+id/buttonNutritionInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonBloodMeasurements"
+        android:layout_below="@+id/buttonBloodMeasurements"
+        android:text="@string/nutrition_information" />
+
+    <Button
+        android:id="@+id/buttonWorkoutInformation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonNutritionInformation"
+        android:layout_below="@+id/buttonNutritionInformation"
+        android:text="@string/workout_information" />
+
+    <Button
+        android:id="@+id/buttonClose"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/buttonWorkoutInformation"
+        android:layout_alignParentBottom="true"
+        android:text="@string/close" />
+
+    <Button
+        android:id="@+id/buttonBloodGlucoseStats"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/buttonWorkoutInformation"
+        android:layout_centerHorizontal="true"
+        android:text="@string/blood_glucose_stats" />
+
+</RelativeLayout>
+<!-- From: file:/home/pmanousi/git/diabetes/res/layout/activity_main.xml -->

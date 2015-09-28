@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">diabetes</string>
+    <string name="action_settings">Settings</string>
+    <string name="blood_measurements">Blood Measurements</string>
+    <string name="nutrition_information">Nutrition Information</string>
+    <string name="workout_information">Workout Information</string>
+    <string name="close">Close</string>
+    <string name="data_of_a_blood_glucose_measurement_">Data of a blood glucose measurement.</string>
+    <string name="blood_glucose_stats">Blood Glucose Stats</string>
+    <string name="display_charts_of_measurements_">Display charts of measurements.</string>
+    <string name="title_activity_plot">PlotActivity</string>
+    <string name="title_activity_workout">Workout Activity</string>
+    <string name="title_activity_nutrition">Nutrition</string>
+    <string name="timesTitle">Time</string>
+    <string name="glucoseTitle">Glucose</string>
+
+</resources>

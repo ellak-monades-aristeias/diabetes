@@ -31,4 +31,4 @@
         android:text="button3"
         android:id="@+id/button3"
         android:layout_weight="0.05" />
-</LinearLayout><!-- From: file:/home/pmanousi/git/diabetes/res/layout/nutrition.xml -->
+</LinearLayout><!-- From: file:/home/pit/StudioProjects/diabetes/res/layout/nutrition.xml -->

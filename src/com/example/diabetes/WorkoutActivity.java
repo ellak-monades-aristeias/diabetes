@@ -1,46 +1,94 @@
 package com.example.diabetes;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
+
+import com.androidplot.util.MultiSynch;
+
+import java.util.HashMap;
 
 /**
  * Created by thanosp on 24/9/2015.
  */
 public class WorkoutActivity extends Activity {
-    RelativeLayout rl;
-    Chronometer focus;
-    Button start;
 
+    RelativeLayout rl;
+    Chronometer chronometer;
+    Button start;
+    Times times;
+    boolean running = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.workout);
         start = (Button) findViewById(R.id.button);
-
-        focus = new Chronometer (WorkoutActivity.this);
+        chronometer = (Chronometer) findViewById(R.id.chronometer);
         rl = (RelativeLayout) findViewById(R.id.rl);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
                 ((int) LayoutParams.WRAP_CONTENT, (int) LayoutParams.WRAP_CONTENT);
-
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
-        params.setMargins(0, 580, 0, 0);
-        focus.setLayoutParams(params);
+        Intent intent = getIntent();
+        times = (Times) intent.getExtras().getSerializable("chronometerTimes");
+       // params.setMargins(0, 580, 0, 0);
+     //   focus.setLayoutParams(params);
+        Log.d("on listener", "I am here" + times.getChronometerPause() + times.getChronometerPause());
+        if(times.getChronometerPause() == 0 && times.getLeftTime() ==0) {
+            chronometer.setBase(SystemClock.elapsedRealtime());
 
-        rl.addView(focus);
+        }
+        else {
+            long timedifference = System.currentTimeMillis() - times.getLeftTime();
+            chronometer.setBase(times.getChronometerPause() + timedifference);
 
+        }
+
+     //   rl.addView(focus);
         start.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
-                // TODO Auto-generated method stub
+                if (running == false) {
+                    if(times.getChronometerPause() == 0 && times.getLeftTime() ==0) {
+                        chronometer.setBase(SystemClock.elapsedRealtime());
 
-                focus.start();
+                    }
+                    else {
+                        long timedifference = System.currentTimeMillis() - times.getLeftTime();
+                        chronometer.setBase(times.getChronometerPause() + timedifference);
+                        Log.d("on listener", "I am here" + times.getChronometerPause() + timedifference);
+                    }
+                    chronometer.start();
+                    start.setText("Stop");
+                    running = true;
+                } else {
+                    start.setText("Start");
+                    chronometer.stop();
+                    chronometer.setBase(SystemClock.elapsedRealtime());
+                    running = false;
+                }
             }
         });
-
     }
+
+    protected void onStop(){
+        long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+        times.setChronometerPause(elapsedMillis);
+        long time= System.currentTimeMillis();
+        times.setLeftTime(time);
+        Intent output = new Intent();
+        output.putExtra("chronometer", String.valueOf(times.getChronometerPause()));
+        output.putExtra("leftTime", String.valueOf(times.getLeftTime()));
+        setResult(MainActivity.RESULT_OK, output);
+        Log.d("on listener", "I am in stop..." + times.getChronometerPause() + "-->" + times.getLeftTime());
+        finish();
+        super.onStop();
+    }
+
 }

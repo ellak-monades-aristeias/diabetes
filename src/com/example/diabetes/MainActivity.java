@@ -1,5 +1,7 @@
 package com.example.diabetes;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -8,6 +10,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.os.Bundle;
+import android.os.Parcelable;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -31,6 +35,8 @@ import java.text.SimpleDateFormat;
 @SuppressLint({ "InflateParams", "SimpleDateFormat", "UseSparseArrays" })
 public class MainActivity extends Activity {
 	SQLiteDatabase db;
+	Times times;
+
 //	For the other tables, these are the insert statements:
 //	db.execSQL("INSERT INTO InsoulinTypes VALUES (1,'Novo Novorapid', 15, 67, 240);");	// Actually, keep this, it has real data.
 //	db.execSQL("INSERT INTO InsoulinDose (insoulinType, dosage) VALUES (1, 14);");
@@ -38,6 +44,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		//Set Times for chronometer
+		setTimes();
 		// Creating database and tables
 		db=openOrCreateDatabase("diabetes", Context.MODE_PRIVATE, null);
 //		db.execSQL("DROP TABLE BloodGlucose;");
@@ -50,26 +58,24 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-				final View promptView = layoutInflater.inflate(R.layout.blood_glucose_form, null);	// Get blood_glucose_form.xml view
+				final View promptView = layoutInflater.inflate(R.layout.blood_glucose_form, null);    // Get blood_glucose_form.xml view
 				((DatePicker) promptView.findViewById(R.id.datePicker)).setSpinnersShown(false);
 				((TimePicker) promptView.findViewById(R.id.timePicker)).setIs24HourView(true);
-				((NumberPicker)promptView.findViewById(R.id.measurement)).setMaxValue(1000);
-				((NumberPicker)promptView.findViewById(R.id.measurement)).setMinValue(10);
-				((NumberPicker)promptView.findViewById(R.id.measurement)).setValue(100);
-				alertDialogBuilder.setView(promptView);	// Set blood_glucose_form.xml to be the layout file of the alertdialog builder
-				alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener()
-				{
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(1000);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(10);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(100);
+				alertDialogBuilder.setView(promptView);    // Set blood_glucose_form.xml to be the layout file of the alertdialog builder
+				alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ContentValues valuesToInsert = new ContentValues();
-						valuesToInsert.put("measuredAt", (((DatePicker) promptView.findViewById(R.id.datePicker)).getYear()+"-"+
-						((((DatePicker)promptView.findViewById(R.id.datePicker)).getMonth() < 10 ) ? "0" + ((DatePicker)promptView.findViewById(R.id.datePicker)).getMonth() : ((DatePicker)promptView.findViewById(R.id.datePicker)).getMonth())+"-"+	//This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
-						((((DatePicker)promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10 ) ? "0" + ((DatePicker)promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker)promptView.findViewById(R.id.datePicker)).getDayOfMonth())+"T"+
-						((((TimePicker)promptView.findViewById(R.id.timePicker)).getCurrentHour() < 10 ) ? "0" + ((TimePicker)promptView.findViewById(R.id.timePicker)).getCurrentHour() : ((TimePicker)promptView.findViewById(R.id.timePicker)).getCurrentHour())+":"+
-						((((TimePicker)promptView.findViewById(R.id.timePicker)).getCurrentMinute() < 10 ) ? "0" + ((TimePicker)promptView.findViewById(R.id.timePicker)).getCurrentMinute() : ((TimePicker)promptView.findViewById(R.id.timePicker)).getCurrentMinute())+":01.234"));
+						valuesToInsert.put("measuredAt", (((DatePicker) promptView.findViewById(R.id.datePicker)).getYear() + "-" +
+								((((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth()) + "-" +    //This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
+								((((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth()) + "T" +
+								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour()) + ":" +
+								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute()) + ":01.234"));
 						valuesToInsert.put("glucoseValue", ((NumberPicker) promptView.findViewById(R.id.measurement)).getValue());
-						if(db.insert("BloodGlucose", null, valuesToInsert) == -1)
-						{
+						if (db.insert("BloodGlucose", null, valuesToInsert) == -1) {
 							Toast.makeText(getApplicationContext(), "Error in blood glucose insertion", Toast.LENGTH_LONG).show();
 						}
 						dialog.dismiss();
@@ -82,7 +88,7 @@ public class MainActivity extends Activity {
 					}
 				});
 				alertDialogBuilder.setCancelable(false);
-				AlertDialog alertD = alertDialogBuilder.create();	// Create an alert dialog
+				AlertDialog alertD = alertDialogBuilder.create();    // Create an alert dialog
 				alertD.show();
 			}
 		});
@@ -95,13 +101,19 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-		
+
+
 		Button buttonWorkoutInformation = (Button) findViewById(R.id.buttonWorkoutInformation);
 		buttonWorkoutInformation.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, WorkoutActivity.class);
-                startActivity(intent);
+				Bundle bundle = new Bundle();
+				bundle.putSerializable("chronometerTimes", (Times) times);
+				intent.putExtras(bundle);
+				setResult(Activity.RESULT_OK, intent);
+				startActivityForResult(intent,1);
+               // startActivity(intent);
 			}
 		});
 		
@@ -137,6 +149,12 @@ public class MainActivity extends Activity {
 			}
 		});
 	}
+
+	public void setTimes(){
+		times = new Times();
+		times.setChronometerPause(0);
+		times.setLeftTime(0);
+	}
 	
 	public void showMessage(String title,String message)
 	{
@@ -168,5 +186,25 @@ public class MainActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+
+	@Override
+	public void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+
+		switch(requestCode) {
+			case (1) : {
+				Log.d("on activityResult", "I am in activityResult and CALLED..." + resultCode);
+				if (resultCode == RESULT_OK) {
+					String chronom = data.getStringExtra("chronometer");
+					String ltime = data.getStringExtra("leftTime");
+					times.setChronometerPause(Integer.parseInt(chronom));
+					times.setLeftTime(Integer.parseInt(ltime));
+
+					Log.d("on activityResult", "I am in activityResult..." + times.getChronometerPause() + "-->" + times.getLeftTime());
+				}
+				break;
+			}
+		}
 	}
 }

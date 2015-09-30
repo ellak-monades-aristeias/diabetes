@@ -2,18 +2,18 @@
 <items version="2" >
 
     <item
-        jar="/home/pit/StudioProjects/diabetes/libs/androidplot-core-0.6.1.jar"
-        jumboMode="false"
-        revision="23.0.1"
-        sha1="3db0daea52375b26bfa61c59b8df93950bdefbbc">
-        <dex dex="/home/pit/StudioProjects/diabetes/build/intermediates/pre-dexed/debug/androidplot-core-0.6.1-58c476b3e4588ad74d7d4aa0c0aadf9e4047989b.jar" />
-    </item>
-    <item
-        jar="/home/pit/StudioProjects/diabetes/libs/android-support-v4.jar"
+        jar="C:\Users\mixail\Desktop\diabetes\libs\android-support-v4.jar"
         jumboMode="false"
         revision="23.0.1"
         sha1="efec67655f6db90757faa37201efcee2a9ec3507">
-        <dex dex="/home/pit/StudioProjects/diabetes/build/intermediates/pre-dexed/debug/android-support-v4-016292a8117d6f1a9da05abe3e112ecce1e2a4c4.jar" />
+        <dex dex="C:\Users\mixail\Desktop\diabetes\build\intermediates\pre-dexed\debug\android-support-v4-3fa70b2cca0d53afb4235fb6ffa488dd486dcd72.jar" />
+    </item>
+    <item
+        jar="C:\Users\mixail\Desktop\diabetes\libs\androidplot-core-0.6.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="3db0daea52375b26bfa61c59b8df93950bdefbbc">
+        <dex dex="C:\Users\mixail\Desktop\diabetes\build\intermediates\pre-dexed\debug\androidplot-core-0.6.1-3d57a94a73d46f54fb95030f489ad9dd1af55c72.jar" />
     </item>
 
 </items>

@@ -66,14 +66,13 @@
             android:layout_alignLeft="@+id/textView3"
             android:layout_marginTop="42dp" />
 
-        <TextView
+        <Chronometer
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
-            android:id="@+id/textView6"
-            android:layout_alignBottom="@+id/textView5"
+            android:id="@+id/chronometer"
+            android:layout_alignTop="@+id/textView5"
             android:layout_alignLeft="@+id/textView4" />
+
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/home/pit/StudioProjects/diabetes/res/layout/workout.xml -->
+</LinearLayout><!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/layout/workout.xml -->

@@ -5,30 +5,48 @@
     android:weightSum="1">
 
     <TextView
-        android:layout_width="324dp"
-        android:layout_height="wrap_content"
+        android:layout_width="309dp"
+        android:layout_height="267dp"
         android:text="question"
+        android:textSize="13dp"
+        android:textStyle="italic"
         android:id="@+id/textView7"
-        android:layout_gravity="center_horizontal"
-        android:layout_weight="0.78" />
+        android:layout_gravity="center_horizontal" />
 
     <Button
-        android:layout_width="152dp"
-        android:layout_height="70dp"
+        android:layout_width="126dp"
+        android:layout_height="60dp"
         android:text="button1"
+        android:textSize="13dp"
+        android:textStyle="italic"
         android:id="@+id/button1"
-        android:layout_weight="0.07" />
+        android:layout_gravity="center_horizontal" />
 
     <Button
-        android:layout_width="152dp"
-        android:layout_height="70dp"
+        android:layout_width="126dp"
+        android:layout_height="60dp"
         android:text="button2"
-        android:id="@+id/button2" />
+        android:textSize="13dp"
+        android:textStyle="italic"
+        android:id="@+id/button2"
+        android:layout_gravity="center_horizontal" />
 
     <Button
-        android:layout_width="152dp"
-        android:layout_height="70dp"
+        android:layout_width="126dp"
+        android:layout_height="60dp"
         android:text="button3"
+        android:textSize="13dp"
+        android:textStyle="italic"
         android:id="@+id/button3"
-        android:layout_weight="0.05" />
-</LinearLayout><!-- From: file:/home/pit/StudioProjects/diabetes/res/layout/nutrition.xml -->
+        android:layout_gravity="center_horizontal" />
+
+    <RadioButton
+        android:layout_width="188dp"
+        android:layout_height="wrap_content"
+        android:text="επόμενη ερώτηση"
+        android:id="@+id/radioButton"
+        android:layout_gravity="center_horizontal"
+        android:checked="false" />
+
+
+</LinearLayout><!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/layout/nutrition.xml -->

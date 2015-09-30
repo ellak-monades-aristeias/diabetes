@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/pit/StudioProjects/diabetes/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -11,7 +11,7 @@
     <dimen name="range_label_font_size">13dp</dimen>
     <dimen name="range_tick_label_font_size">15dp</dimen>
     <dimen name="title_font_size">20dp</dimen>
-    <!-- From: file:/home/pit/StudioProjects/diabetes/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/values/strings.xml -->
     <eat-comment/>
     <string name="action_settings">Settings</string>
     <string name="app_name">diabetes</string>
@@ -27,7 +27,7 @@
     <string name="title_activity_plot">PlotActivity</string>
     <string name="title_activity_workout">Workout Activity</string>
     <string name="workout_information">Workout Information</string>
-    <!-- From: file:/home/pit/StudioProjects/diabetes/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--

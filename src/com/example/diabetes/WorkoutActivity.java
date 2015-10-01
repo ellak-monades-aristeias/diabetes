@@ -44,9 +44,9 @@ public class WorkoutActivity extends Activity {
             chronometer.setBase(SystemClock.elapsedRealtime());
         }
         else {
-            long timedifference = ((System.currentTimeMillis()/1000) - times.getLeftTime());
+            long timedifference = (System.currentTimeMillis() - times.getLeftTime());
 
-            chronometer.setBase(times.getChronometerPause() + timedifference);
+            chronometer.setBase(SystemClock.elapsedRealtime() - (times.getChronometerPause() + timedifference));
             chronometer.start();
             start.setText("Stop");
             running = true;
@@ -83,9 +83,9 @@ public class WorkoutActivity extends Activity {
     }
     @Override
     public void onBackPressed() {
-        long elapsedMillis = ((SystemClock.elapsedRealtime() - chronometer.getBase())/1000);
+        long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
         times.setChronometerPause(elapsedMillis);
-        long time= (long) (System.currentTimeMillis()/1000.0);
+        long time = System.currentTimeMillis();
         times.setLeftTime(time);
 
         Intent output = new Intent();

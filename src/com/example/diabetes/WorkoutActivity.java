@@ -39,15 +39,17 @@ public class WorkoutActivity extends Activity {
         times = (Times) intent.getExtras().getSerializable("chronometerTimes");
        // params.setMargins(0, 580, 0, 0);
      //   focus.setLayoutParams(params);
-        Log.d("on listener", "I am here" + times.getChronometerPause() + times.getChronometerPause());
-        if(times.getChronometerPause() == 0 && times.getLeftTime() ==0) {
+        Log.d("on listener", "I am here " + times.getChronometerPause() +" "+ times.getLeftTime());
+        if(times.getChronometerPause() == 0) {
             chronometer.setBase(SystemClock.elapsedRealtime());
-
         }
         else {
-            long timedifference = System.currentTimeMillis() - times.getLeftTime();
-            chronometer.setBase(times.getChronometerPause() + timedifference);
+            long timedifference = ((System.currentTimeMillis()/1000) - times.getLeftTime());
 
+            chronometer.setBase(times.getChronometerPause() + timedifference);
+            chronometer.start();
+            start.setText("Stop");
+            running = true;
         }
 
      //   rl.addView(focus);
@@ -55,15 +57,14 @@ public class WorkoutActivity extends Activity {
             @Override
             public void onClick(View v) {
                 if (running == false) {
-                    if(times.getChronometerPause() == 0 && times.getLeftTime() ==0) {
+                    if (times.getChronometerPause() == 0 && times.getLeftTime() == 0) {
                         chronometer.setBase(SystemClock.elapsedRealtime());
 
-                    }
-                    else {
-                        long timedifference = System.currentTimeMillis() - times.getLeftTime();
-                        chronometer.setBase(times.getChronometerPause() + timedifference);
-                        Log.d("on listener", "I am here" + times.getChronometerPause() + timedifference);
-                    }
+                    } //else {
+                   //     long timedifference = System.currentTimeMillis() - times.getLeftTime();
+                  //      chronometer.setBase(times.getChronometerPause() + timedifference);
+                 //       Log.d("on listener", "I am here" + times.getChronometerPause() + timedifference);
+                 //   }
                     chronometer.start();
                     start.setText("Stop");
                     running = true;
@@ -77,17 +78,31 @@ public class WorkoutActivity extends Activity {
         });
     }
 
-    protected void onStop(){
-        long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+    protected void onPause(){
+        super.onPause();
+    }
+    @Override
+    public void onBackPressed() {
+        long elapsedMillis = ((SystemClock.elapsedRealtime() - chronometer.getBase())/1000);
         times.setChronometerPause(elapsedMillis);
-        long time= System.currentTimeMillis();
+        long time= (long) (System.currentTimeMillis()/1000.0);
         times.setLeftTime(time);
+
         Intent output = new Intent();
-        output.putExtra("chronometer", String.valueOf(times.getChronometerPause()));
-        output.putExtra("leftTime", String.valueOf(times.getLeftTime()));
-        setResult(MainActivity.RESULT_OK, output);
+        if(elapsedMillis == 0) {
+            output.putExtra("chronometer", String.valueOf(0));
+            output.putExtra("leftTime", String.valueOf(0));
+        }
+        else{
+            output.putExtra("chronometer", String.valueOf(elapsedMillis));
+            output.putExtra("leftTime", String.valueOf(time));
+        }
+        setResult(Activity.RESULT_OK, output);
         Log.d("on listener", "I am in stop..." + times.getChronometerPause() + "-->" + times.getLeftTime());
         finish();
+    }
+
+    protected void onStop(){
         super.onStop();
     }
 

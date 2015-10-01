@@ -195,11 +195,11 @@ public class MainActivity extends Activity {
 		switch(requestCode) {
 			case (1) : {
 				Log.d("on activityResult", "I am in activityResult and CALLED..." + resultCode);
-				if (resultCode == RESULT_OK) {
+				if (resultCode == Activity.RESULT_OK) {
 					String chronom = data.getStringExtra("chronometer");
 					String ltime = data.getStringExtra("leftTime");
-					times.setChronometerPause(Integer.parseInt(chronom));
-					times.setLeftTime(Integer.parseInt(ltime));
+					times.setChronometerPause(Long.parseLong(chronom));
+					times.setLeftTime(Long.parseLong(ltime));
 
 					Log.d("on activityResult", "I am in activityResult..." + times.getChronometerPause() + "-->" + times.getLeftTime());
 				}

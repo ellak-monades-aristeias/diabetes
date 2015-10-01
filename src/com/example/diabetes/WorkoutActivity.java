@@ -1,6 +1,7 @@
 package com.example.diabetes;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -25,6 +26,7 @@ public class WorkoutActivity extends Activity {
     Chronometer chronometer;
     Button start;
     Times times;
+
     boolean running = false;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,8 +53,26 @@ public class WorkoutActivity extends Activity {
             start.setText("Stop");
             running = true;
         }
+        chronometer.setOnChronometerTickListener(
+                new Chronometer.OnChronometerTickListener(){
 
-     //   rl.addView(focus);
+                    @Override
+                    public void onChronometerTick(Chronometer chronometer) {
+                        // TODO Auto-generated method stub
+                        long myElapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
+                        String strElapsedMillis = "Please check your glucose " + myElapsedMillis;
+                        if ("00:20".equals(chronometer.getText())) {
+                            Context context = getApplicationContext();
+                            CharSequence text = "Please check your glucose";
+                            int duration = Toast.LENGTH_LONG;
+                            Toast toast = Toast.makeText(context, text, duration);
+                            toast.show();
+                        }
+                    }
+                }
+        );
+
+        //   rl.addView(focus);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -61,10 +81,10 @@ public class WorkoutActivity extends Activity {
                         chronometer.setBase(SystemClock.elapsedRealtime());
 
                     } //else {
-                   //     long timedifference = System.currentTimeMillis() - times.getLeftTime();
-                  //      chronometer.setBase(times.getChronometerPause() + timedifference);
-                 //       Log.d("on listener", "I am here" + times.getChronometerPause() + timedifference);
-                 //   }
+                    //     long timedifference = System.currentTimeMillis() - times.getLeftTime();
+                    //      chronometer.setBase(times.getChronometerPause() + timedifference);
+                    //       Log.d("on listener", "I am here" + times.getChronometerPause() + timedifference);
+                    //   }
                     chronometer.start();
                     start.setText("Stop");
                     running = true;
@@ -84,7 +104,13 @@ public class WorkoutActivity extends Activity {
     @Override
     public void onBackPressed() {
         long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
-        times.setChronometerPause(elapsedMillis);
+        if(running == true) {
+            times.setChronometerPause(elapsedMillis);
+        }
+        else {
+            times.setChronometerPause(0);
+            elapsedMillis = 0;
+        }
         long time = System.currentTimeMillis();
         times.setLeftTime(time);
 

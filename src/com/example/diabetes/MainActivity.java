@@ -1,8 +1,5 @@
 package com.example.diabetes;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
@@ -10,7 +7,6 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,7 +14,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
-import android.widget.EditText;
 import android.widget.NumberPicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
@@ -28,9 +23,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.*;
-
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 
 @SuppressLint({ "InflateParams", "SimpleDateFormat", "UseSparseArrays" })
 public class MainActivity extends Activity {
@@ -69,6 +61,67 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ContentValues valuesToInsert = new ContentValues();
+						valuesToInsert.put("givenAt", (((DatePicker) promptView.findViewById(R.id.datePicker)).getYear() + "-" +
+								((((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth()) + "-" +    //This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
+								((((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth()) + "T" +
+								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour()) + ":" +
+								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute()) + ":01.234"));
+                        valuesToInsert.put("insoulinType", 0);
+						valuesToInsert.put("dosage", ((NumberPicker) promptView.findViewById(R.id.measurement)).getValue());
+						if (db.insert("InsoulinDose", null, valuesToInsert) == -1) {
+							Toast.makeText(getApplicationContext(), "Error in insoulin dose insertion", Toast.LENGTH_LONG).show();
+						}
+						dialog.dismiss();
+					}
+				});
+				alertDialogBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						dialog.cancel();
+					}
+				});
+				alertDialogBuilder.setCancelable(false);
+				AlertDialog alertD = alertDialogBuilder.create();    // Create an alert dialog
+				alertD.show();
+			}
+		});
+
+		Button buttonInsulin = (Button) findViewById(R.id.buttonInsulin);
+        buttonInsulin.setOnClickListener(new View.OnClickListener() {
+
+            /*HashMap<Integer, Integer> dbValues=new HashMap<Integer, Integer>();
+            Cursor cursor = db.rawQuery("SELECT dosage FROM InsoulinDose WHERE givenAt BETWEEN ;", null);
+            cursor.moveToFirst();
+            while (cursor.isAfterLast() == false)
+            {
+                dbValues.put(cursor.getInt(cursor.getColumnIndex("Hour")), cursor.getInt(cursor.getColumnIndex("AVGGlucose")));
+                cursor.moveToNext();
+            }
+            cursor.close();
+            Intent intent = new Intent(MainActivity.this, PlotActivity.class);
+            intent.putExtra("valuesHashMap", dbValues);
+            select datetime('now', 'localtime', '-' || strftime('%M',givenAt) || ' minutes'), dosage
+            from insoulindose
+            where givenat > datetime('now', 'localtime', '-1 hours') and insoulintype = 0
+            group by strftime('%H:%M',givenAt)
+            order by givenat DESC;*/
+
+
+			@Override
+			public void onClick(View v) {
+				LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+				final View promptView = layoutInflater.inflate(R.layout.blood_glucose_form, null);    // Get blood_glucose_form.xml view
+				((DatePicker) promptView.findViewById(R.id.datePicker)).setSpinnersShown(false);
+				((TimePicker) promptView.findViewById(R.id.timePicker)).setIs24HourView(true);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(60);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(1);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(6);
+				alertDialogBuilder.setView(promptView);    // Set blood_glucose_form.xml to be the layout file of the alertdialog builder
+				alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+					@Override
+					public void onClick(DialogInterface dialog, int which) {
+						ContentValues valuesToInsert = new ContentValues();
 						valuesToInsert.put("measuredAt", (((DatePicker) promptView.findViewById(R.id.datePicker)).getYear() + "-" +
 								((((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth()) + "-" +    //This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
 								((((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth()) + "T" +
@@ -101,7 +154,6 @@ public class MainActivity extends Activity {
 				startActivity(intent);
 			}
 		});
-
 
 		Button buttonWorkoutInformation = (Button) findViewById(R.id.buttonWorkoutInformation);
 		buttonWorkoutInformation.setOnClickListener(new View.OnClickListener() {
@@ -155,8 +207,8 @@ public class MainActivity extends Activity {
 		times.setChronometerPause(0);
 		times.setLeftTime(0);
 	}
-	
-	public void showMessage(String title,String message)
+
+    public void showMessage(String title,String message)
 	{
 		Builder builder=new Builder(this);
 		builder.setCancelable(true);
@@ -183,6 +235,7 @@ public class MainActivity extends Activity {
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
 		if (id == R.id.action_settings) {
+            Log.d("Options", "Options pressed -> give menu for insulin types");
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
@@ -191,7 +244,6 @@ public class MainActivity extends Activity {
 	@Override
 	public void onActivityResult(int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
-
 		switch(requestCode) {
 			case (1) : {
 				Log.d("on activityResult", "I am in activityResult and CALLED..." + resultCode);
@@ -200,7 +252,6 @@ public class MainActivity extends Activity {
 					String ltime = data.getStringExtra("leftTime");
 					times.setChronometerPause(Long.parseLong(chronom));
 					times.setLeftTime(Long.parseLong(ltime));
-
 					Log.d("on activityResult", "I am in activityResult..." + times.getChronometerPause() + "-->" + times.getLeftTime());
 				}
 				break;

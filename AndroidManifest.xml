@@ -44,7 +44,7 @@
 
         <activity
             android:name=".Nutrition"
-            android:label="@string/title_activity_workout" >
+            android:label="@string/title_activity_nutrition" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

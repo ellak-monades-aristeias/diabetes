@@ -20,17 +20,17 @@
         android:id="@+id/buttonNutritionInformation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonBloodMeasurements"
-        android:layout_below="@+id/buttonBloodMeasurements"
-        android:text="@string/nutrition_information" />
+        android:text="@string/nutrition_information"
+        android:layout_below="@+id/buttonWorkoutInformation"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/buttonWorkoutInformation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/buttonNutritionInformation"
-        android:layout_below="@+id/buttonNutritionInformation"
-        android:text="@string/workout_information" />
+        android:text="@string/workout_information"
+        android:layout_below="@+id/buttonBloodGlucoseStats"
+        android:layout_alignParentLeft="true" />
 
     <Button
         android:id="@+id/buttonClose"
@@ -44,9 +44,17 @@
         android:id="@+id/buttonBloodGlucoseStats"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/buttonWorkoutInformation"
-        android:layout_centerHorizontal="true"
-        android:text="@string/blood_glucose_stats" />
+        android:text="@string/blood_glucose_stats"
+        android:layout_below="@+id/buttonInsulin"
+        android:layout_alignParentRight="true" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/insulinbtn"
+        android:id="@+id/buttonInsulin"
+        android:layout_below="@+id/buttonBloodMeasurements"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>
-<!-- From: file:/C:/Users/thanosp/AndroidStudioProjects/diabetes/res/layout/activity_main.xml -->
+<!-- From: file:/home/pit/StudioProjects/diabetes/res/layout/activity_main.xml -->

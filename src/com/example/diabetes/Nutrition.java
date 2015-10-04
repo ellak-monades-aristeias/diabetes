@@ -1,6 +1,5 @@
 package com.example.diabetes;
 
-
 import java.util.Arrays;
 import java.util.Random;
 
@@ -11,9 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.view.View.OnClickListener;
 import android.graphics.Color;
-import android.widget.RadioButton;
 import android.widget.TextView;
-
 
 /**
  * Created by mikela-k on 30/9/2015.
@@ -21,8 +18,7 @@ import android.widget.TextView;
 
 public class Nutrition extends Activity{
 	private int random_int;
-	private Button button1, button2, button3;
-	private RadioButton next_question;
+	private Button button1, button2, button3, next_question;
 	private String[][] question_array=new String[10][4];
 	private Boolean[][] answers_array = new Boolean[10][3];
 	private TextView tv;
@@ -31,19 +27,14 @@ public class Nutrition extends Activity{
 	private TextView displayTextView;
 
 	public void onCreate(Bundle savedInstanceState) {
-
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.nutrition);
-
 		Arrays.fill(array, Boolean.FALSE);
 		call();
-
 	}
 
 	public void call(){
-
 		int  randomInt;
-
 		question_array[0][0]="ΠΑΣΤΙΤΣΙΟ (10 μερίδες): κιμάς:500γρ. μοσχαρίσιος κιμάς, 1 κρεμμύδι, 3 κουταλιές της σούπας ελαιόλαδο, "
 				+ "ντομάτες, 100ml κόκκινο κρασί, 2-3 σκελίδες σκόρδο, αλάτι, πιπέρι, 1 πρέζα μοσχοκάρυδο, "
 				+ "μακαρόνια: 300γρ. μακαρόνια χοντρά, 75γρ. κεφαλοτύρι, 100ml γάλα ημιαποβουτυρωμένο, 1 αυγό, "
@@ -118,7 +109,6 @@ public class Nutrition extends Activity{
 		answers_array[6][1]=Boolean.FALSE;
 		answers_array[6][2]=Boolean.TRUE;
 
-
 		question_array[7][0]="ΨΑΡΙΑ ΤΗΓΑΝΗΤΑ (3-4 μερίδες): \n600γρ. ψάρια(βακαλάος, γόπες, μπαρμπούνια, κουτσομούρες) "
 				+ "30γρ. αλεύρι σκληρό, 100γρ. ελαιόλαδο, αλάτι. \n Σε μία μερίδα(120γρ.) πόσα ισοδύναμα υδατανθράκων υπάρχουν;";
 		question_array[7][1]="1.0";
@@ -127,7 +117,6 @@ public class Nutrition extends Activity{
 		answers_array[7][0]=Boolean.FALSE;
 		answers_array[7][1]=Boolean.TRUE;
 		answers_array[7][2]=Boolean.FALSE;
-
 
 		question_array[8][0]="ΜΟΣΧΑΡΙ ΚΟΚΚΙΝΙΣΤΟ (4-5 μερίδες): \n650γρ. κρέας μοσχαρίσιο ή βοδινό(άπαχο), 500γρ. ντομάτες "
 				+"2 σκελίδες σκόρδο, 100γρ. κρεμμύδι ξερό, ξερά γαρίφαλα, λίγο μοσχοκάρυδο, 100ml κόκκινο κρασί, 50γρ. ελαιόλαδο"
@@ -148,47 +137,31 @@ public class Nutrition extends Activity{
 		answers_array[9][0]=Boolean.TRUE;
 		answers_array[9][1]=Boolean.FALSE;
 		answers_array[9][2]=Boolean.FALSE;
-
 		Random randomGenerator = new Random();
-
 		if(i<number_of_recipes){
-
 			randomInt = randomGenerator.nextInt(number_of_recipes);
 			while (Boolean.TRUE.equals(array[randomInt])) {
 				randomInt = randomGenerator.nextInt(number_of_recipes);
-
 			}
 			array[randomInt] = Boolean.TRUE;
-
 			random_int=randomInt;
-
 			String question = question_array[randomInt][0];
-
-
 			String question_to = question_array[randomInt][0];
-			displayTextView = (TextView) findViewById(R.id.textView7);
+			displayTextView = (TextView) findViewById(R.id.query_textView);
 			displayTextView.setText(question_to);
-
-
 			button1 = (Button) findViewById(R.id.button1);
 			button2 = (Button) findViewById(R.id.button2);
 			button3 = (Button) findViewById(R.id.button3);
 			button1.setBackgroundColor(Color.GRAY);
 			button2.setBackgroundColor(Color.GRAY);
 			button3.setBackgroundColor(Color.GRAY);
-
-
 			button1.setEnabled(true);
 			button2.setEnabled(true);
 			button3.setEnabled(true);
-
-
 			button1.setText(question_array[random_int][1]);
 			button1.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-
-
 					if (answers_array[random_int][0] == Boolean.TRUE) {
 						button1.setBackgroundColor(Color.GREEN);
 						right_answers++;
@@ -197,22 +170,15 @@ public class Nutrition extends Activity{
 					} else {
 						button3.setBackgroundColor(Color.RED);
 					}
-
 					button1.setEnabled(false);
 					button2.setEnabled(false);
 					button3.setEnabled(false);
-
 				}
 			});
-
-
-
 			button2.setText(question_array[random_int][2]);
 			button2.setOnClickListener(new View.OnClickListener() {
 
 				public void onClick(View v) {
-
-
 					if (answers_array[random_int][0] == Boolean.TRUE) {
 						button1.setBackgroundColor(Color.RED);
 					} else if (answers_array[random_int][1] == Boolean.TRUE) {
@@ -221,42 +187,32 @@ public class Nutrition extends Activity{
 					} else {
 						button3.setBackgroundColor(Color.RED);
 					}
-
 					button1.setEnabled(false);
 					button2.setEnabled(false);
 					button3.setEnabled(false);
-
 				}
 			});
-
-
 			button3.setText(question_array[random_int][3]);
 			button3.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-
-					if (answers_array[random_int][0]  == Boolean.TRUE) {
+					if (answers_array[random_int][0] == Boolean.TRUE) {
 						button1.setBackgroundColor(Color.RED);
-					} else if (answers_array[random_int][1]== Boolean.TRUE) {
+					} else if (answers_array[random_int][1] == Boolean.TRUE) {
 						button2.setBackgroundColor(Color.RED);
 					} else {
 						button3.setBackgroundColor(Color.GREEN);
 						right_answers++;
 					}
-
 					button1.setEnabled(false);
 					button2.setEnabled(false);
 					button3.setEnabled(false);
 				}
 			});
-
-
-			next_question = (RadioButton) findViewById(R.id.radioButton);
-
+			next_question =  (Button) findViewById(R.id.nextQuestion_button);
 			next_question.setOnClickListener(new OnClickListener() {
 
 				public void onClick(View v) {
-
 					i++;
 					if (i==number_of_recipes){
 						float total = ((float)right_answers / (float)number_of_recipes) * 100;
@@ -271,15 +227,12 @@ public class Nutrition extends Activity{
 		}
 	}
 
-
 	public void showMessage(String title,String message)
 	{
-
 		AlertDialog.Builder builder=new AlertDialog.Builder(this);
 		builder.setCancelable(true);
 		builder.setTitle(title);
 		builder.setMessage(message);
 		builder.show();
 	}
-
 }

@@ -10,7 +10,7 @@
         android:text="question"
         android:textSize="13dp"
         android:textStyle="italic"
-        android:id="@+id/textView7"
+        android:id="@+id/query_textView"
         android:layout_gravity="center_horizontal" />
 
     <Button
@@ -40,13 +40,14 @@
         android:id="@+id/button3"
         android:layout_gravity="center_horizontal" />
 
-    <RadioButton
-        android:layout_width="188dp"
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="επόμενη ερώτηση"
-        android:id="@+id/radioButton"
+        android:text="Next Question"
+        android:id="@+id/nextQuestion_button"
         android:layout_gravity="center_horizontal"
-        android:checked="false" />
+        android:clickable="false" />
 
 
 </LinearLayout>

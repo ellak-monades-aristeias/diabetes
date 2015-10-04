@@ -8,6 +8,8 @@
         android:minSdkVersion="14"
         android:targetSdkVersion="14" />
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
@@ -42,7 +44,7 @@
         </activity>
         <activity
             android:name="com.example.diabetes.Nutrition"
-            android:label="@string/title_activity_workout" >
+            android:label="@string/title_activity_nutrition" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

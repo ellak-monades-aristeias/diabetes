@@ -12,8 +12,9 @@
     <string name="display_charts_of_measurements_">Display charts of measurements.</string>
     <string name="title_activity_plot">PlotActivity</string>
     <string name="title_activity_workout">Workout Activity</string>
-    <string name="title_activity_nutrition">Nutrition</string>
+    <string name="title_activity_nutrition">Nutrition Activity</string>
     <string name="timesTitle">Time</string>
     <string name="glucoseTitle">Glucose</string>
+    <string name="insulinbtn">New insulin dosage</string>
 
 </resources>

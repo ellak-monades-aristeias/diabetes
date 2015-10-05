@@ -203,8 +203,9 @@ public class GPSTracker extends Service implements LocationListener {
     }
 
     public double getDistance(double lat1, double lon1,double alt1, double lat2, double lon2, double alt2) {
-        double dist = Math.sqrt((lat2 - lat1)*(lat2 - lat1) + (lon2-lon1)*(lon2-lon1));
-      /*  double earthRadius = 6371000; //meters
+      //  double dist = Math.sqrt((lat2 - lat1)*(lat2 - lat1) + (lon2-lon1)*(lon2-lon1));
+        double dist =2 * Math.asin(Math.sqrt(Math.pow((Math.sin((lat1 - lat2) / 2)), 2) + Math.pow(Math.cos(lat1) * Math.cos(lat2) * (Math.sin((lon1 - lon2) / 2)), 2))) * 100000;
+        /*double earthRadius = 63674491000.0; //meters
         double dLat = Math.toRadians(lat2-lat1);
         double dLng = Math.toRadians(lon2-lon1);
         double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
@@ -236,7 +237,7 @@ public class GPSTracker extends Service implements LocationListener {
         Log.d("super_tag", "Distance is: " + distance + " lat:" + prevLatitude + " long:" + prevLongtitude);
         distance += getDistance(prevLatitude,prevLongtitude,prevAltitude,latitude,longitude,altitude);
         Log.d("super_tag", "Distance after call is: " + distance);
-        distanceTextview.setText(String.valueOf(distance));
+        distanceTextview.setText(String.valueOf(new DecimalFormat("##.##").format(distance)) + " meters");
 
         prevLatitude = latitude;
         prevLongtitude = longitude;

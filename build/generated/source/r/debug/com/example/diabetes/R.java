@@ -73,12 +73,13 @@ public final class R {
         public static final int display_charts_of_measurements_=0x7f060006;
         public static final int glucoseTitle=0x7f060007;
         public static final int insulinbtn=0x7f060008;
-        public static final int nutrition_information=0x7f060009;
-        public static final int timesTitle=0x7f06000a;
-        public static final int title_activity_nutrition=0x7f06000b;
-        public static final int title_activity_plot=0x7f06000c;
-        public static final int title_activity_workout=0x7f06000d;
-        public static final int workout_information=0x7f06000e;
+        public static final int locationService=0x7f060009;
+        public static final int nutrition_information=0x7f06000a;
+        public static final int timesTitle=0x7f06000b;
+        public static final int title_activity_nutrition=0x7f06000c;
+        public static final int title_activity_plot=0x7f06000d;
+        public static final int title_activity_workout=0x7f06000e;
+        public static final int workout_information=0x7f06000f;
     }
     public static final class style {
         /**  API 11 theme customizations can go here. 

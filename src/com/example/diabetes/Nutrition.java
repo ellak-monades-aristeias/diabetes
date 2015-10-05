@@ -19,10 +19,10 @@ import android.widget.TextView;
 public class Nutrition extends Activity{
 	private int random_int;
 	private Button button1, button2, button3, next_question;
-	private String[][] question_array=new String[10][4];
-	private Boolean[][] answers_array = new Boolean[10][3];
+    private int right_answers=0, i=0, number_of_recipes=11;
+	private String[][] question_array=new String[number_of_recipes][4];
+	private Boolean[][] answers_array = new Boolean[number_of_recipes][3];
 	private TextView tv;
-	private int right_answers=0, i=0, number_of_recipes=10;
 	private Boolean[] array = new Boolean[number_of_recipes];
 	private TextView displayTextView;
 
@@ -35,11 +35,7 @@ public class Nutrition extends Activity{
 
 	public void call(){
 		int  randomInt;
-		question_array[0][0]="ΠΑΣΤΙΤΣΙΟ (10 μερίδες): κιμάς:500γρ. μοσχαρίσιος κιμάς, 1 κρεμμύδι, 3 κουταλιές της σούπας ελαιόλαδο, "
-				+ "ντομάτες, 100ml κόκκινο κρασί, 2-3 σκελίδες σκόρδο, αλάτι, πιπέρι, 1 πρέζα μοσχοκάρυδο, "
-				+ "μακαρόνια: 300γρ. μακαρόνια χοντρά, 75γρ. κεφαλοτύρι, 100ml γάλα ημιαποβουτυρωμένο, 1 αυγό, "
-				+ "μπεσαμέλ: 50γρ. αλεύρι, 0.5L γάλα ημιαποβουτυρωμένο, 40γρ. ελαιόλαδο, 25γρ. κεφαλοτύρι, μισό αυγό,"
-				+ " μισό ασπράδι αυγού. \n Σε μία μερίδα(260γρ.) πόσα ισοδύναμα υδατανθράκων υπάρχουν; ";
+		question_array[0][0]="Σε " + "μία μερίδα ΠΑΣΤΙΤΣΙΟ (περίπου 260γρ)" + ", πόσα ισοδύναμα υδατανθράκων υπάρχουν;";
 		question_array[0][1]="2.3";
 		question_array[0][2]="1.5";
 		question_array[0][3]="3.2";
@@ -137,6 +133,14 @@ public class Nutrition extends Activity{
 		answers_array[9][0]=Boolean.TRUE;
 		answers_array[9][1]=Boolean.FALSE;
 		answers_array[9][2]=Boolean.FALSE;
+
+		question_array[10][0]="Xaxa";
+		question_array[10][1]="8";
+		question_array[10][2]="2";
+		question_array[10][3]="9";
+		answers_array[10][0]=Boolean.TRUE;
+		answers_array[10][1]=Boolean.TRUE;
+		answers_array[10][2]=Boolean.TRUE;
 		Random randomGenerator = new Random();
 		if(i<number_of_recipes){
 			randomInt = randomGenerator.nextInt(number_of_recipes);

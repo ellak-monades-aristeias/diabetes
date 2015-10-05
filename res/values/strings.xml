@@ -16,5 +16,6 @@
     <string name="timesTitle">Time</string>
     <string name="glucoseTitle">Glucose</string>
     <string name="insulinbtn">New insulin dosage</string>
+    <string name="locationService">Location Service</string>
 
 </resources>

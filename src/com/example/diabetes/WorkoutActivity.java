@@ -1,14 +1,18 @@
 package com.example.diabetes;
 
 import android.app.Activity;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.location.Location;
+import android.location.LocationListener;
 import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -16,24 +20,58 @@ import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
 import android.widget.Chronometer;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.androidplot.util.MultiSynch;
-
-import java.util.HashMap;
 
 /**
  * Created by thanosp on 24/9/2015.
  */
 public class WorkoutActivity extends Activity {
-    private static final double MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 0.01; // in Meters
-    private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000;
+   // private static final double MINIMUM_DISTANCE_CHANGE_FOR_UPDATES = 0.01; // in Meters
+   /// private static final long MINIMUM_TIME_BETWEEN_UPDATES = 1000;
+   // public static final String mBroadcastStringAction = "com.example.broadcast.string";
+
+    public LocationReceiver receiver;
 
     protected LocationManager locationManager;
     RelativeLayout rl;
     Chronometer chronometer;
+    private TextView distanceText;
     Button start;
     Times times;
+  //  Intent servIntent;
+    private IntentFilter mIntentFilter;
+    // GPSTracker class
+    GPSTracker gps;
+
+    private static final String ACTION_STRING_SERVICE = "ToService";
+    private static final String ACTION_STRING_ACTIVITY = "ToActivity";
+
+    public void setupServiceReceiver() {
+        receiver = new LocationReceiver(new Handler());
+        // This is where we specify what happens when data is received from the service
+        receiver.setReceiver(new LocationReceiver.Receiver() {
+            @Override
+            public void onReceiveResult(int resultCode, Bundle resultData) {
+                if (resultCode == RESULT_OK) {
+                    String resultValue = resultData.getString("resultValue");
+                    Toast.makeText(WorkoutActivity.this, resultValue, Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
+   /* private BroadcastReceiver mReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            Log.d("super_tag", "I got a message!!!!");
+            //  if (intent.getAction().equals(Intent.ACTION_SEND)) {
+            distanceText.setText(intent.getStringExtra("longitude") + "\n\n");
+          //  Intent stopIntent = new Intent(WorkoutActivity.this,GPSTracker.class);
+        //    stopService(stopIntent);
+            //    }
+        }
+    };*/
 
     boolean running = false;
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +79,7 @@ public class WorkoutActivity extends Activity {
         setContentView(R.layout.workout);
         start = (Button) findViewById(R.id.button);
         chronometer = (Chronometer) findViewById(R.id.chronometer);
+        distanceText = (TextView) findViewById(R.id.textView2);
         rl = (RelativeLayout) findViewById(R.id.rl);
         RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams
                 ((int) LayoutParams.WRAP_CONTENT, (int) LayoutParams.WRAP_CONTENT);
@@ -61,8 +100,19 @@ public class WorkoutActivity extends Activity {
             start.setText("Stop");
             running = true;
         }
+
+     /*   if (mReceiver != null) {
+            //Create an intent filter to listen to the broadcast sent with the action "ACTION_STRING_ACTIVITY"
+            IntentFilter intentFilter = new IntentFilter(ACTION_STRING_ACTIVITY);
+            //Map the intent filter to the receiver
+            registerReceiver(mReceiver, intentFilter);
+        }*/
+
+        mIntentFilter = new IntentFilter();
+        mIntentFilter.addAction(ACTION_STRING_ACTIVITY);
+
         chronometer.setOnChronometerTickListener(
-                new Chronometer.OnChronometerTickListener(){
+                new Chronometer.OnChronometerTickListener() {
 
                     @Override
                     public void onChronometerTick(Chronometer chronometer) {
@@ -87,17 +137,6 @@ public class WorkoutActivity extends Activity {
                 }
         );
 
-        IntentFilter filter = new IntentFilter("com.diabetes.LOAD_URL");
-        this.registerReceiver(new LocationReceiver(), filter);
-
-  /*      locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
-        locationManager.requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                MINIMUM_TIME_BETWEEN_UPDATES,
-                (float) MINIMUM_DISTANCE_CHANGE_FOR_UPDATES,
-                new MyLocationlistener()
-        );*/
-
         //   rl.addView(focus);
         start.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -106,13 +145,25 @@ public class WorkoutActivity extends Activity {
                     if (times.getChronometerPause() == 0 && times.getLeftTime() == 0) {
                         chronometer.setBase(SystemClock.elapsedRealtime());
 
-                    } //else {
-                    //     long timedifference = System.currentTimeMillis() - times.getLeftTime();
-                    //      chronometer.setBase(times.getChronometerPause() + timedifference);
-                    //       Log.d("on listener", "I am here" + times.getChronometerPause() + timedifference);
-                    //   }
-                    Intent servIntent = new Intent("com.diabetes-latest.diabetes.LocationService");
-                    startService(servIntent);
+                    }
+                    Log.d("super_tag", " Button Pressed!!!!");
+                 //   servIntent = new Intent(WorkoutActivity.this, LocationService.class);
+                //    WorkoutActivity.this.startService(servIntent);
+                    // create class object
+                    gps = new GPSTracker(WorkoutActivity.this,distanceText);
+                    // check if GPS enabled
+                    if(gps.canGetLocation()){
+                        double latitude = gps.getLatitude();
+                        double longitude = gps.getLongitude();
+                        // \n is for new line
+                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                    }else{
+                        // can't get location
+                        // GPS or Network is not enabled
+                        // Ask user to enable GPS/network in settings
+                        gps.showSettingsAlert();
+                    }
+
                     chronometer.start();
                     start.setText("Stop");
                     running = true;
@@ -125,6 +176,8 @@ public class WorkoutActivity extends Activity {
             }
         });
     }
+
+
 
     public double getDistance(double lat1, double lon1, double lat2, double lon2) {
         double latA = Math.toRadians(lat1);
@@ -155,6 +208,7 @@ public class WorkoutActivity extends Activity {
                 Toast.LENGTH_LONG).show();
     }
 
+    @Override
     protected void onPause(){
         super.onPause();
     }
@@ -182,11 +236,24 @@ public class WorkoutActivity extends Activity {
         }
         setResult(Activity.RESULT_OK, output);
         Log.d("on listener", "I am in stop..." + times.getChronometerPause() + "-->" + times.getLeftTime());
+      //  unregisterReceiver(mReceiver);
         finish();
     }
 
     protected void onStop(){
+      //  unregisterReceiver(mReceiver);
         super.onStop();
+    }
+
+    @Override
+    protected void onResume(){
+    //    registerReceiver(mReceiver, mIntentFilter);
+        super.onResume();
+
+    }
+
+    public TextView getDistanceText(){
+        return distanceText;
     }
 
 }

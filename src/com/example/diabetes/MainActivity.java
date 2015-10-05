@@ -29,9 +29,6 @@ public class MainActivity extends Activity {
 	SQLiteDatabase db;
 	Times times;
 
-//	For the other tables, these are the insert statements:
-//	db.execSQL("INSERT INTO InsoulinTypes VALUES (1,'Novo Novorapid', 15, 67, 240);");	// Actually, keep this, it has real data.
-//	db.execSQL("INSERT INTO InsoulinDose (insoulinType, dosage) VALUES (1, 14);");
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -44,28 +41,35 @@ public class MainActivity extends Activity {
 		db.execSQL("CREATE TABLE IF NOT EXISTS InsoulinTypes (insoulinID integer, name varchar(50), ActingStartMinutes integer, ActingPeakMinutes integer, durationMinutes integer, PRIMARY KEY (insoulinID));");
 		db.execSQL("CREATE TABLE IF NOT EXISTS InsoulinDose (givenAt TEXT, insoulinType integer, dosage double precision, FOREIGN KEY (insoulinType) REFERENCES InsoulinTypes(insoulinID), PRIMARY KEY (givenAt, insoulinType) );");
 		db.execSQL("CREATE TABLE IF NOT EXISTS BloodGlucose (measuredAt TEXT, glucoseValue smallint, PRIMARY KEY (measuredAt));");
-		Button buttonBloodMeasurements = (Button) findViewById(R.id.buttonBloodMeasurements);
-		buttonBloodMeasurements.setOnClickListener(new View.OnClickListener() {
+
+		Button buttonInsulin = (Button) findViewById(R.id.buttonInsulin);
+		buttonInsulin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+
+                Cursor cursor = db.rawQuery("SELECT SUM(EnergiInsoulini) AS sei FROM (SELECT dosage AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-15 minutes') AND givenAt < datetime('now', 'localtime') AND insoulintype = 0 UNION SELECT dosage * 0.8 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-75 minutes') AND givenAt < datetime('now', 'localtime', '-15 minutes') AND insoulintype = 0 UNION SELECT dosage * 0.6 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-135 minutes') AND givenAt < datetime('now', 'localtime', '-75 minutes') AND insoulintype = 0 UNION SELECT dosage * 0.4 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-195 minutes') AND givenAt < datetime('now', 'localtime', '-135 minutes') AND insoulintype = 0 UNION SELECT dosage * 0.2 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-255 minutes') AND givenAt < datetime('now', 'localtime', '-195 minutes') AND insoulintype = 0);", null);
+                cursor.moveToFirst();
+                Toast.makeText(getApplicationContext(), "Your current insoulin is: " + cursor.getDouble(cursor.getColumnIndex("sei")), Toast.LENGTH_LONG).show();
+                cursor.close();
+
 				LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
 				final View promptView = layoutInflater.inflate(R.layout.blood_glucose_form, null);    // Get blood_glucose_form.xml view
 				((DatePicker) promptView.findViewById(R.id.datePicker)).setSpinnersShown(false);
 				((TimePicker) promptView.findViewById(R.id.timePicker)).setIs24HourView(true);
-				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(1000);
-				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(10);
-				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(100);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(60);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(1);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(10);
 				alertDialogBuilder.setView(promptView);    // Set blood_glucose_form.xml to be the layout file of the alertdialog builder
 				alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ContentValues valuesToInsert = new ContentValues();
 						valuesToInsert.put("givenAt", (((DatePicker) promptView.findViewById(R.id.datePicker)).getYear() + "-" +
-								((((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth()) + "-" +    //This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
-								((((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth()) + "T" +
+								(((((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() + 1) < 10) ? "0" + (((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() + 1) : (((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth()) + 1) + "-" +    //This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
+								((((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth()) + " " +
 								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour()) + ":" +
-								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute()) + ":01.234"));
+								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute()) + ":01"));
                         valuesToInsert.put("insoulinType", 0);
 						valuesToInsert.put("dosage", ((NumberPicker) promptView.findViewById(R.id.measurement)).getValue());
 						if (db.insert("InsoulinDose", null, valuesToInsert) == -1) {
@@ -86,27 +90,8 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		Button buttonInsulin = (Button) findViewById(R.id.buttonInsulin);
-        buttonInsulin.setOnClickListener(new View.OnClickListener() {
-
-            /*HashMap<Integer, Integer> dbValues=new HashMap<Integer, Integer>();
-            Cursor cursor = db.rawQuery("SELECT dosage FROM InsoulinDose WHERE givenAt BETWEEN ;", null);
-            cursor.moveToFirst();
-            while (cursor.isAfterLast() == false)
-            {
-                dbValues.put(cursor.getInt(cursor.getColumnIndex("Hour")), cursor.getInt(cursor.getColumnIndex("AVGGlucose")));
-                cursor.moveToNext();
-            }
-            cursor.close();
-            Intent intent = new Intent(MainActivity.this, PlotActivity.class);
-            intent.putExtra("valuesHashMap", dbValues);
-            select datetime('now', 'localtime', '-' || strftime('%M',givenAt) || ' minutes'), dosage
-            from insoulindose
-            where givenat > datetime('now', 'localtime', '-1 hours') and insoulintype = 0
-            group by strftime('%H:%M',givenAt)
-            order by givenat DESC;*/
-
-
+		Button buttonBloodMeasurements = (Button) findViewById(R.id.buttonBloodMeasurements);
+		buttonBloodMeasurements.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
@@ -114,16 +99,16 @@ public class MainActivity extends Activity {
 				final View promptView = layoutInflater.inflate(R.layout.blood_glucose_form, null);    // Get blood_glucose_form.xml view
 				((DatePicker) promptView.findViewById(R.id.datePicker)).setSpinnersShown(false);
 				((TimePicker) promptView.findViewById(R.id.timePicker)).setIs24HourView(true);
-				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(60);
-				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(1);
-				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(6);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(1000);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(20);
+				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(100);
 				alertDialogBuilder.setView(promptView);    // Set blood_glucose_form.xml to be the layout file of the alertdialog builder
 				alertDialogBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ContentValues valuesToInsert = new ContentValues();
 						valuesToInsert.put("measuredAt", (((DatePicker) promptView.findViewById(R.id.datePicker)).getYear() + "-" +
-								((((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth()) + "-" +    //This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
+								(((((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() + 1) < 10) ? "0" + (((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() + 1) : (((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth()) + 1) + "-" +    //This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
 								((((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth()) + "T" +
 								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour()) + ":" +
 								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute()) + ":01.234"));
@@ -161,7 +146,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, WorkoutActivity.class);
 				Bundle bundle = new Bundle();
-				bundle.putSerializable("chronometerTimes", (Times) times);
+				bundle.putSerializable("chronometerTimes", times);
 				intent.putExtras(bundle);
 				setResult(Activity.RESULT_OK, intent);
 				startActivityForResult(intent,1);

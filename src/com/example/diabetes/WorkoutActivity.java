@@ -13,6 +13,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
@@ -22,6 +23,8 @@ import android.widget.Chronometer;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.io.Serializable;
 
 
 /**
@@ -44,7 +47,7 @@ public class WorkoutActivity extends Activity {
     private IntentFilter mIntentFilter;
     // GPSTracker class
     GPSTracker gps;
-
+    DistanceInfo distInfo;
     private static final String ACTION_STRING_SERVICE = "ToService";
     private static final String ACTION_STRING_ACTIVITY = "ToActivity";
 
@@ -75,6 +78,17 @@ public class WorkoutActivity extends Activity {
 
     boolean running = false;
     protected void onCreate(Bundle savedInstanceState) {
+        Log.d("super_tanga", "WorkActivity oncreate!!!");
+        if(gps != null) {
+
+            if(gps.getRunning()){
+                Log.d("super_tanga", "Einai trueueueueeu");
+            }
+            else{
+                Log.d("super_tanga", "Einai falselselse");
+            }
+        }
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.workout);
         start = (Button) findViewById(R.id.button);
@@ -86,6 +100,11 @@ public class WorkoutActivity extends Activity {
         params.addRule(RelativeLayout.CENTER_HORIZONTAL);
         Intent intent = getIntent();
         times = (Times) intent.getExtras().getSerializable("chronometerTimes");
+
+        distInfo = new DistanceInfo();
+        distInfo.setCurrentDistance(0);
+
+
        // params.setMargins(0, 580, 0, 0);
      //   focus.setLayoutParams(params);
         Log.d("on listener", "I am here " + times.getChronometerPause() + " " + times.getLeftTime());
@@ -94,19 +113,14 @@ public class WorkoutActivity extends Activity {
         }
         else {
             long timedifference = (System.currentTimeMillis() - times.getLeftTime());
-
+            distInfo = (DistanceInfo) intent.getExtras().getSerializable("distances");
+            gps = new GPSTracker(WorkoutActivity.this,distanceText,distInfo);
+            gps.setDistance(distInfo.getCurrentDistance());
             chronometer.setBase(SystemClock.elapsedRealtime() - (times.getChronometerPause() + timedifference));
             chronometer.start();
             start.setText("Stop");
             running = true;
         }
-
-     /*   if (mReceiver != null) {
-            //Create an intent filter to listen to the broadcast sent with the action "ACTION_STRING_ACTIVITY"
-            IntentFilter intentFilter = new IntentFilter(ACTION_STRING_ACTIVITY);
-            //Map the intent filter to the receiver
-            registerReceiver(mReceiver, intentFilter);
-        }*/
 
         mIntentFilter = new IntentFilter();
         mIntentFilter.addAction(ACTION_STRING_ACTIVITY);
@@ -119,9 +133,9 @@ public class WorkoutActivity extends Activity {
                         // TODO Auto-generated method stub
                         long myElapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
                         String strElapsedMillis = "Please check your glucose " + myElapsedMillis;
-                        if ("00:20".equals(chronometer.getText())) {
+                        if ("30:00".equals(chronometer.getText())) {
                             Context context = getApplicationContext();
-                            CharSequence text = "Please check your glucose";
+                            CharSequence text = "Please check your glucose levels";
                             int duration = Toast.LENGTH_LONG;
                             try {
                                 Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -147,20 +161,16 @@ public class WorkoutActivity extends Activity {
 
                     }
                     Log.d("super_tag", " Button Pressed!!!!");
-                 //   servIntent = new Intent(WorkoutActivity.this, LocationService.class);
-                //    WorkoutActivity.this.startService(servIntent);
                     // create class object
-                    gps = new GPSTracker(WorkoutActivity.this,distanceText);
+                    gps = new GPSTracker(WorkoutActivity.this,distanceText,distInfo);
+                    gps.setRunning(true);
                     // check if GPS enabled
                     if(gps.canGetLocation()){
                         double latitude = gps.getLatitude();
                         double longitude = gps.getLongitude();
-                        // \n is for new line
-                        Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
+                       // Toast.makeText(getApplicationContext(), "Your Location is - \nLat: " + latitude + "\nLong: " + longitude, Toast.LENGTH_LONG).show();
                     }else{
-                        // can't get location
-                        // GPS or Network is not enabled
-                        // Ask user to enable GPS/network in settings
+                        // can't get location GPS or Network is not enabled Ask user to enable GPS/network in settings
                         gps.showSettingsAlert();
                     }
 
@@ -217,8 +227,17 @@ public class WorkoutActivity extends Activity {
         long elapsedMillis = SystemClock.elapsedRealtime() - chronometer.getBase();
         if(running == true) {
             times.setChronometerPause(elapsedMillis);
+            distInfo.setLatitudeLeft(gps.getLatitude());
+            distInfo.setLongtitudeLeft(gps.getLongitude());
+            distInfo.setCurrentDistance(gps.getDistance());
         }
         else {
+            if(gps == null) {
+                gps = new GPSTracker(WorkoutActivity.this,distanceText,distInfo);
+                distInfo.setLatitudeLeft(gps.getLatitude());
+                distInfo.setLongtitudeLeft(gps.getLongitude());
+            }
+            distInfo.setCurrentDistance(0);
             times.setChronometerPause(0);
             elapsedMillis = 0;
         }
@@ -229,10 +248,16 @@ public class WorkoutActivity extends Activity {
         if(elapsedMillis == 0) {
             output.putExtra("chronometer", String.valueOf(0));
             output.putExtra("leftTime", String.valueOf(0));
+            output.putExtra("latitude", String.valueOf(gps.getLatitude()));
+            output.putExtra("longitude", String.valueOf(gps.getLongitude()));
+            output.putExtra("currentDistance", String.valueOf(gps.getDistance()));
         }
         else{
             output.putExtra("chronometer", String.valueOf(elapsedMillis));
             output.putExtra("leftTime", String.valueOf(time));
+            output.putExtra("latitude", String.valueOf(gps.getLatitude()));
+            output.putExtra("longitude", String.valueOf(gps.getLongitude()));
+            output.putExtra("currentDistance", String.valueOf(gps.getDistance()));
         }
         setResult(Activity.RESULT_OK, output);
         Log.d("on listener", "I am in stop..." + times.getChronometerPause() + "-->" + times.getLeftTime());
@@ -242,12 +267,18 @@ public class WorkoutActivity extends Activity {
 
     protected void onStop(){
       //  unregisterReceiver(mReceiver);
+        if(gps!=null) {
+            gps.setRunning(false);
+        //    gps.destroy();
+
+        }
         super.onStop();
     }
 
     @Override
     protected void onResume(){
     //    registerReceiver(mReceiver, mIntentFilter);
+        Log.d("super_tanga", "WorkActivity resumed!!!");
         super.onResume();
 
     }

@@ -35,10 +35,10 @@ public class GPSTracker extends Service implements LocationListener {
     boolean canGetLocation = false;
 
     Location location; // location
-    double latitude; // latitude
-    double longitude; // longitude
-    double altitude; //altitude
-
+    private double latitude; // latitude
+    private double longitude; // longitude
+    private double altitude; //altitude
+    private boolean latlonnotset =false;
     // The minimum distance to change Updates in meters
     private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
 
@@ -57,14 +57,33 @@ public class GPSTracker extends Service implements LocationListener {
     private double prevLatitude =0;
     private double prevAltitude = 0;
     private boolean isLocationChanged = false;
-
+    private DistanceInfo distInfo;
+    private boolean running = false;
 
     public GPSTracker(){ }
 
-    public GPSTracker(Context context,TextView view) {
+    public GPSTracker(Context context,TextView view,DistanceInfo dinfo) {
         distanceTextview = view;
         this.mContext = context;
+        distInfo = dinfo;
         getLocation();
+    }
+    public void setLatLon(double lat,double lon){
+        this.prevLatitude = lat;
+        this.prevLongtitude = lon;
+        this.latlonnotset = true;
+    }
+    public double getDistance(){
+        return this.distance;
+    }
+    public void setDistance(double dist){
+       this.distance = dist;
+    }
+    public void setRunning(boolean r){
+        this.running = r;
+    }
+    public boolean getRunning(){
+        return this.running;
     }
 
     public Location getLocation() {
@@ -226,7 +245,7 @@ public class GPSTracker extends Service implements LocationListener {
         longitude = location.getLongitude();
         latitude = location.getLatitude();
         altitude = location.getAltitude();
-        if(!isLocationChanged) {
+        if(!isLocationChanged && !latlonnotset) {
             prevLatitude = latitude;
             prevLongtitude = longitude;
             prevAltitude = altitude;
@@ -237,7 +256,9 @@ public class GPSTracker extends Service implements LocationListener {
         Log.d("super_tag", "Distance is: " + distance + " lat:" + prevLatitude + " long:" + prevLongtitude);
         distance += getDistance(prevLatitude,prevLongtitude,prevAltitude,latitude,longitude,altitude);
         Log.d("super_tag", "Distance after call is: " + distance);
-        distanceTextview.setText(String.valueOf(new DecimalFormat("##.##").format(distance)) + " meters");
+        Log.d("super_tag", "Speed after call is: " + location.getSpeed());
+
+        distanceTextview.setText(String.valueOf(new DecimalFormat("##.##").format(distance)) + " meters" );
 
         prevLatitude = latitude;
         prevLongtitude = longitude;
@@ -259,4 +280,9 @@ public class GPSTracker extends Service implements LocationListener {
     public IBinder onBind(Intent intent) {
         return null;
     }
+    public void destroy(){
+        super.onDestroy();
+    }
+
+
 }

@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
+            android:text="0 meters"
             android:id="@+id/textView2"
             android:layout_alignBottom="@+id/textView"
             android:layout_toRightOf="@+id/button" />

@@ -1,5 +1,6 @@
 package com.example.diabetes;
 
+import java.io.Serializable;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
@@ -28,6 +29,7 @@ import android.database.sqlite.*;
 public class MainActivity extends Activity {
 	SQLiteDatabase db;
 	Times times;
+	DistanceInfo distanceInfo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +37,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.activity_main);
 		//Set Times for chronometer
 		setTimes();
+		distanceInfo = new DistanceInfo();
 		// Creating database and tables
 		db=openOrCreateDatabase("diabetes", Context.MODE_PRIVATE, null);
 //		db.execSQL("DROP TABLE BloodGlucose;");
@@ -147,7 +150,10 @@ public class MainActivity extends Activity {
                 Intent intent = new Intent(MainActivity.this, WorkoutActivity.class);
 				Bundle bundle = new Bundle();
 				bundle.putSerializable("chronometerTimes", times);
+				Bundle b1 = new Bundle();
+				b1.putSerializable("distances", distanceInfo);
 				intent.putExtras(bundle);
+				intent.putExtras(b1);
 				setResult(Activity.RESULT_OK, intent);
 				startActivityForResult(intent,1);
                // startActivity(intent);
@@ -161,8 +167,7 @@ public class MainActivity extends Activity {
 				HashMap<Integer, Integer> dbValues=new HashMap<Integer, Integer>();
 				Cursor cursor = db.rawQuery("SELECT strftime('%H',measuredAt) AS Hour, AVG(glucoseValue) AS AVGGlucose FROM BloodGlucose GROUP BY strftime('%H',measuredAt) ORDER BY strftime('%H',measuredAt);", null);
 				cursor.moveToFirst();
-				while (cursor.isAfterLast() == false)
-				{
+				while (cursor.isAfterLast() == false) {
 					dbValues.put(cursor.getInt(cursor.getColumnIndex("Hour")), cursor.getInt(cursor.getColumnIndex("AVGGlucose")));
 					cursor.moveToNext();
 				}
@@ -237,7 +242,11 @@ public class MainActivity extends Activity {
 					String ltime = data.getStringExtra("leftTime");
 					times.setChronometerPause(Long.parseLong(chronom));
 					times.setLeftTime(Long.parseLong(ltime));
+					distanceInfo.setCurrentDistance(Double.parseDouble(data.getStringExtra("currentDistance")));
 					Log.d("on activityResult", "I am in activityResult..." + times.getChronometerPause() + "-->" + times.getLeftTime());
+
+					//distanceInfo = (DistanceInfo) data.getSerializableExtra("distances");
+					Log.d("super_tag", "Distance in MAin activity is: " + distanceInfo.getCurrentDistance());
 				}
 				break;
 			}

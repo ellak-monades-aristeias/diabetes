@@ -4,16 +4,16 @@
     android:layout_height="match_parent"
     android:contentDescription="@string/data_of_a_blood_glucose_measurement_" >
 
-    <DatePicker
-        android:id="@+id/datePicker"
+    <Spinner
+        android:id="@+id/time"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content" />
-    
+        android:layout_height="wrap_content"></Spinner>
+
     <FrameLayout
         android:id="@+id/titles"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/datePicker" >
+        android:layout_below="@+id/time" >
         
         <FrameLayout 
         android:id="@+id/lefts"
@@ -46,7 +46,8 @@
 	        android:layout_height="wrap_content"
 	        android:layout_gravity="center_horizontal"
 	        android:text="@string/glucoseTitle"
-	        android:textAppearance="?android:attr/textAppearanceSmall" />
+	        android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/glucoseUnitID" />
         <NumberPicker
 	        android:id="@+id/measurement"
 	        android:layout_width="wrap_content"

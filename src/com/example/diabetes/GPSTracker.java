@@ -106,11 +106,9 @@ public class GPSTracker extends Service implements LocationListener {
                             LocationManager.NETWORK_PROVIDER,
                             MIN_TIME_BW_UPDATES,
                             MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                    Log.d("super_tag", "Reguested location update");
                     if (locationManager != null) {
                         location = locationManager
                                 .getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                        Log.d("super_tag", "location is:" + location);
                         if (location != null) {
                             latitude = location.getLatitude();
                             longitude = location.getLongitude();
@@ -124,7 +122,6 @@ public class GPSTracker extends Service implements LocationListener {
                                 LocationManager.GPS_PROVIDER,
                                 MIN_TIME_BW_UPDATES,
                                 MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
-                        Log.d("super_tag", "GPS Enabled");
                         if (locationManager != null) {
                             location = locationManager
                                     .getLastKnownLocation(LocationManager.GPS_PROVIDER);
@@ -179,20 +176,20 @@ public class GPSTracker extends Service implements LocationListener {
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         // Setting Dialog Title
-        alertDialog.setTitle("GPS is settings");
+        alertDialog.setTitle(R.string.gpsIsSettings);
         // Setting Dialog Message
-        alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu?");
+        alertDialog.setMessage(R.string.gpsIsNotEnabledDoYouWantToGoToSettingsMenu);
         // Setting Icon to Dialog
         //alertDialog.setIcon(R.drawable.delete);
         // On pressing Settings button
-        alertDialog.setPositiveButton("Settings", new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 mContext.startActivity(intent);
             }
         });
         // on pressing cancel button
-        alertDialog.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
@@ -217,25 +214,11 @@ public class GPSTracker extends Service implements LocationListener {
         latitude = location.getLatitude();
         longitude = location.getLongitude();
         new_intent.putExtra("longitude", "hey");
-        Log.d("super_tag", "Sending Broadcast.... Latitude: " + latitude + " Longitude:" + longitude);
         mContext.sendBroadcast(new_intent);
     }
 
     public double getDistance(double lat1, double lon1,double alt1, double lat2, double lon2, double alt2) {
-      //  double dist = Math.sqrt((lat2 - lat1)*(lat2 - lat1) + (lon2-lon1)*(lon2-lon1));
-        double dist =2 * Math.asin(Math.sqrt(Math.pow((Math.sin((lat1 - lat2) / 2)), 2) + Math.pow(Math.cos(lat1) * Math.cos(lat2) * (Math.sin((lon1 - lon2) / 2)), 2))) * 100000;
-        /*double earthRadius = 63674491000.0; //meters
-        double dLat = Math.toRadians(lat2-lat1);
-        double dLng = Math.toRadians(lon2-lon1);
-        double a = Math.sin(dLat/2) * Math.sin(dLat/2) +
-                Math.cos(Math.toRadians(lat1)) * Math.cos(Math.toRadians(lat2)) *
-                        Math.sin(dLng/2) * Math.sin(dLng/2);
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
-        float dist = (float) (earthRadius * c);
-
-       // return dist;*/
-
-        return dist;
+        return(2 * Math.asin(Math.sqrt(Math.pow((Math.sin((lat1 - lat2) / 2)), 2) + Math.pow(Math.cos(lat1) * Math.cos(lat2) * (Math.sin((lon1 - lon2) / 2)), 2))) * 100000);
     }
 
     @Override
@@ -249,16 +232,11 @@ public class GPSTracker extends Service implements LocationListener {
             prevLatitude = latitude;
             prevLongtitude = longitude;
             prevAltitude = altitude;
-            Log.d("super_tag", "islocationchanged is false ");
             isLocationChanged = true;
         }
-        Log.d("super_tag", "Distance is: " + distance + " plat:" + prevLatitude + " plong:" + prevLongtitude);
-        Log.d("super_tag", "Distance is: " + distance + " lat:" + prevLatitude + " long:" + prevLongtitude);
         distance += getDistance(prevLatitude,prevLongtitude,prevAltitude,latitude,longitude,altitude);
-        Log.d("super_tag", "Distance after call is: " + distance);
-        Log.d("super_tag", "Speed after call is: " + location.getSpeed());
 
-        distanceTextview.setText(String.valueOf(new DecimalFormat("##.##").format(distance)) + " meters" );
+        distanceTextview.setText(String.valueOf(new DecimalFormat("##.##").format(distance)) + getString(R.string.meters) );
 
         prevLatitude = latitude;
         prevLongtitude = longitude;

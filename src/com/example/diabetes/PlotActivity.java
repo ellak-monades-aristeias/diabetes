@@ -43,13 +43,13 @@ public class PlotActivity extends Activity {
 		getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
 		setContentView(R.layout.activity_plot);
 		XYPlot plot = (XYPlot) findViewById(R.id.plot);	// Initialize our XYPlot reference
-		XYSeries series = new SimpleXYSeries(hours, measurements, "Blood Glucose");	// Turn the above arrays into XYSeries'
+		XYSeries series = new SimpleXYSeries(hours, measurements, getString(R.string.bloodGlucose));	// Turn the above arrays into XYSeries'
 		LineAndPointFormatter seriesFormat = new LineAndPointFormatter();	// Create a formatter to use for drawing a series using LineAndPointRenderer
 		seriesFormat.setPointLabelFormatter(new PointLabelFormatter());
 		// Set titles for the graph.
-		plot.setTitle("Glugose profile");
-		plot.setDomainLabel("Hour");
-		plot.setRangeLabel("Glucose");
+		plot.setTitle(getString(R.string.glucoseProfile));
+		plot.setDomainLabel(getString(R.string.hour));
+		plot.setRangeLabel(getString(R.string.glucose));
 		plot.addSeries(series, seriesFormat);
 		plot.setTicksPerRangeLabel(3);	// Reduce the number of range labels
 		plot.getGraphWidget().setDomainLabelOrientation(-45);

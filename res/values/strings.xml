@@ -17,5 +17,35 @@
     <string name="glucoseTitle">Glucose</string>
     <string name="insulinbtn">New insulin dosage</string>
     <string name="locationService">Location Service</string>
+    <string name="yourCurrentInsoulinIs">"Your current insoulin is: "</string>
+    <string name="errorInInsoulinDoseInsertion">Error in insoulin dose insertion</string>
+    <string name="cancel">Cancel</string>
+    <string name="errorInBloodGlucoseInsertion">Error in blood glucose insertion</string>
+    <string name="glucoseProfile">Glugose profile</string>
+    <string name="hour">Hour</string>
+    <string name="glucose">Glucose</string>
+    <string name="bloodGlucose">Blood Glucose</string>
+    <string name="units">Units</string>
+    <string name="settings">Settings</string>
+    <string name="gpsIsNotEnabledDoYouWantToGoToSettingsMenu">GPS is not enabled. Do you want to go to settings menu?</string>
+    <string name="gpsIsSettings">GPS info</string>
+    <string name="meters">" meters"</string>
+    <string name="pleaseCheckYourGlucose">"Please check your glucose "</string>
+    <string name="pleaseCheckYourGlucoseLevels">Please check your glucose levels</string>
+    <string name="stop">Stop</string>
+    <string name="start">Start</string>
+    <string name="se">"Σε "</string>
+    <string name="posaIsodynamaYdatan8rakwnYparxoyn">, πόσα ισοδύναμα υδατανθράκων υπάρχουν;</string>
+    <string name="score">Score</string>
+    <string name="nextQuestion">Next Question</string>
+    <string-array name="glucose_time">
+    <item><string name="pp">"Before Breakfast"</string></item>
+    <item><string name="mp">"After Breakfast"</string></item>
+    <item><string name="pg">"Before Lunch"</string></item>
+    <item><string name="mg">"After Lunch"</string></item>
+    <item><string name="pd">"Before Diner"</string></item>
+    <item><string name="md">"After Diner"</string></item>
+    <item><string name="py">"Bedtime"</string></item>
+    </string-array>
 
 </resources>

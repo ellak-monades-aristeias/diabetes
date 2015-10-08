@@ -36,8 +36,8 @@
     <string name="start">Start</string>
     <string name="se">"Σε "</string>
     <string name="posaIsodynamaYdatan8rakwnYparxoyn">, πόσα ισοδύναμα υδατανθράκων υπάρχουν;</string>
-    <string name="score">Score</string>
     <string name="nextQuestion">Next Question</string>
+    <string name="score">Score</string>
     <string-array name="glucose_time">
     <item><string name="pp">"Before Breakfast"</string></item>
     <item><string name="mp">"After Breakfast"</string></item>

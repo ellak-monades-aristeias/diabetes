@@ -2,6 +2,7 @@ package com.example.diabetes;
 
 import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
@@ -9,6 +10,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -42,16 +44,25 @@ public class MainActivity extends Activity {
 		distanceInfo = new DistanceInfo();
 		// Creating database and tables
 		db = openOrCreateDatabase("diabetes", Context.MODE_PRIVATE, null);
-		//db.execSQL("DROP TABLE BloodGlucose;");
-		db.execSQL("CREATE TABLE IF NOT EXISTS InsoulinDose (givenAt TEXT, dosage double precision, PRIMARY KEY (givenAt, insoulinType) );");
+	//	db.execSQL("DROP TABLE BloodGlucose;");
+	//	db.execSQL("DROP TABLE InsoulinDose;");
+		db.execSQL("CREATE TABLE IF NOT EXISTS InsoulinDose (givenAt TEXT, dosage double precision, PRIMARY KEY (givenAt) );");
 		db.execSQL("CREATE TABLE IF NOT EXISTS BloodGlucose (measuredAt TEXT, measuredAtType smallint, glucoseValue smallint, PRIMARY KEY (measuredAt));");
 
 		Button buttonInsulin = (Button) findViewById(R.id.buttonInsulin);
 		buttonInsulin.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-                Cursor cursor = db.rawQuery("SELECT SUM(EnergiInsoulini) AS sei FROM (SELECT dosage AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-15 minutes') AND givenAt < datetime('now', 'localtime') UNION SELECT dosage * 0.8 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-75 minutes') AND givenAt < datetime('now', 'localtime', '-15 minutes') UNION SELECT dosage * 0.6 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-135 minutes') AND givenAt < datetime('now', 'localtime', '-75 minutes') UNION SELECT dosage * 0.4 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-195 minutes') AND givenAt < datetime('now', 'localtime', '-135 minutes') UNION SELECT dosage * 0.2 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-255 minutes') AND givenAt < datetime('now', 'localtime', '-195 minutes'));", null);
-                cursor.moveToFirst();
+
+                Cursor cursor = db.rawQuery("SELECT SUM(ei) AS sei FROM (" +
+                        "SELECT dosage AS ei FROM insoulindose " +
+                        "WHERE givenAt BETWEEN datetime('now', 'localtime', '-2 hours') AND datetime('now', 'localtime') " +
+                        "UNION SELECT dosage * 0.8 AS EnergiInsoulini FROM insoulindose WHERE givenAt BETWEEN datetime('now', 'localtime', '-75 minutes') AND datetime('now', 'localtime', '-15 minutes') " +
+                        "UNION SELECT dosage * 0.6 AS EnergiInsoulini FROM insoulindose WHERE givenAt BETWEEN datetime('now', 'localtime', '-135 minutes') AND datetime('now', 'localtime', '-75 minutes') " +
+                        "UNION SELECT dosage * 0.4 AS EnergiInsoulini FROM insoulindose WHERE givenAt BETWEEN datetime('now', 'localtime', '-195 minutes') AND datetime('now', 'localtime', '-135 minutes') " +
+                        "UNION SELECT dosage * 0.2 AS EnergiInsoulini FROM insoulindose WHERE givenAt BETWEEN datetime('now', 'localtime', '-255 minutes') AND datetime('now', 'localtime', '-195 minutes')" +
+                        ");", null);
+                cursor.moveToNext();
                 Toast.makeText(getApplicationContext(), getString(R.string.yourCurrentInsoulinIs) + new DecimalFormat("##.##").format(cursor.getDouble(cursor.getColumnIndex("sei"))), Toast.LENGTH_LONG).show();
                 cursor.close();
 				LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
@@ -59,6 +70,11 @@ public class MainActivity extends Activity {
 				final View promptView = layoutInflater.inflate(R.layout.dosology_form, null);    // Get dosology_form.xml
 				((DatePicker) promptView.findViewById(R.id.datePicker)).setSpinnersShown(false);
 				((TimePicker) promptView.findViewById(R.id.timePicker)).setIs24HourView(true);
+
+
+                Calendar c = Calendar.getInstance();
+                ((TimePicker) promptView.findViewById(R.id.timePicker)).setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
+
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(60);
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(1);
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(10);
@@ -74,7 +90,7 @@ public class MainActivity extends Activity {
 								((((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth()) + " " +
 								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour()) + ":" +
 								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentMinute()) + ":01"));
-                        valuesToInsert.put("insoulinType", 0);
+
 						valuesToInsert.put("dosage", ((NumberPicker) promptView.findViewById(R.id.measurement)).getValue());
 						if (db.insert("InsoulinDose", null, valuesToInsert) == -1) {
 							Toast.makeText(getApplicationContext(), R.string.errorInInsoulinDoseInsertion, Toast.LENGTH_LONG).show();

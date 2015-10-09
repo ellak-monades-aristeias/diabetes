@@ -44,10 +44,10 @@
         style="?android:attr/buttonStyleSmall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Next Question"
+        android:text="@string/nextQuestion"
         android:id="@+id/nextQuestion_button"
         android:layout_gravity="center_horizontal"
         android:clickable="false" />
 
 
-</LinearLayout><!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/layout/nutrition.xml -->
+</LinearLayout><!-- From: file:/home/pmanousi/StudioProjects/diabetes/res/layout/nutrition.xml -->

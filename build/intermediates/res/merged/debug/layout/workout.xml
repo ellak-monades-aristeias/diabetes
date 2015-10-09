@@ -41,17 +41,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Steps:"
             android:id="@+id/textView3"
-            android:layout_below="@+id/textView"
-            android:layout_alignLeft="@+id/textView"
-            android:layout_marginTop="44dp" />
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/textView" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="Large Text"
             android:id="@+id/textView4"
             android:layout_alignBottom="@+id/textView3"
             android:layout_alignLeft="@+id/textView2" />
@@ -62,9 +59,9 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Time:"
             android:id="@+id/textView5"
-            android:layout_below="@+id/textView3"
-            android:layout_alignLeft="@+id/textView3"
-            android:layout_marginTop="42dp" />
+            android:layout_below="@+id/textView"
+            android:layout_alignLeft="@+id/textView"
+            android:layout_marginTop="63dp" />
 
         <Chronometer
             android:layout_width="wrap_content"
@@ -75,4 +72,4 @@
 
     </RelativeLayout>
 
-</LinearLayout><!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/layout/workout.xml -->
+</LinearLayout><!-- From: file:/home/pmanousi/StudioProjects/diabetes/res/layout/workout.xml -->

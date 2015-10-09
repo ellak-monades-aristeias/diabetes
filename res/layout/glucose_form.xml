@@ -7,53 +7,40 @@
     <Spinner
         android:id="@+id/time"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"></Spinner>
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"></Spinner>
 
     <FrameLayout
         android:id="@+id/titles"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/time" >
-        
-        <FrameLayout 
-        android:id="@+id/lefts"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|left" >
-        >
-        <TextView
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_horizontal"
-	        android:text="@string/timesTitle"
-	        android:textAppearance="?android:attr/textAppearanceSmall" />
-        <TimePicker
-	        android:id="@+id/timePicker"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content" 
-	        android:layout_gravity="bottom"
-	        android:layout_margin="20sp" />
-        </FrameLayout>
-        
-        <FrameLayout 
+
+        <FrameLayout
         android:id="@+id/rights"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal|right" >
+        android:layout_gravity="center_horizontal|right" ><![CDATA[
         >
+
+
+            ]]></FrameLayout>
+
         <TextView
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:layout_gravity="center_horizontal"
+	        android:layout_gravity="center_horizontal|top"
 	        android:text="@string/glucoseTitle"
 	        android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/glucoseUnitID" />
+
         <NumberPicker
-	        android:id="@+id/measurement"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:layout_marginTop="20sp" />
-        </FrameLayout>
+        android:id="@+id/measurement"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20sp"
+            android:layout_gravity="center" />
     </FrameLayout>
 
 </RelativeLayout>

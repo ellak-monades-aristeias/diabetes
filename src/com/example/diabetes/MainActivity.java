@@ -1,5 +1,6 @@
 package com.example.diabetes;
 
+import java.text.DecimalFormat;
 import java.util.HashMap;
 
 import android.annotation.SuppressLint;
@@ -51,7 +52,7 @@ public class MainActivity extends Activity {
 
                 Cursor cursor = db.rawQuery("SELECT SUM(EnergiInsoulini) AS sei FROM (SELECT dosage AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-15 minutes') AND givenAt < datetime('now', 'localtime') UNION SELECT dosage * 0.8 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-75 minutes') AND givenAt < datetime('now', 'localtime', '-15 minutes') UNION SELECT dosage * 0.6 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-135 minutes') AND givenAt < datetime('now', 'localtime', '-75 minutes') UNION SELECT dosage * 0.4 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-195 minutes') AND givenAt < datetime('now', 'localtime', '-135 minutes') UNION SELECT dosage * 0.2 AS EnergiInsoulini FROM insoulindose WHERE givenAt > datetime('now', 'localtime', '-255 minutes') AND givenAt < datetime('now', 'localtime', '-195 minutes'));", null);
                 cursor.moveToFirst();
-                Toast.makeText(getApplicationContext(), getString(R.string.yourCurrentInsoulinIs) + cursor.getDouble(cursor.getColumnIndex("sei")), Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), getString(R.string.yourCurrentInsoulinIs) + new DecimalFormat("##.##").format(cursor.getDouble(cursor.getColumnIndex("sei"))), Toast.LENGTH_LONG).show();
                 cursor.close();
 
 				LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
@@ -117,7 +118,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
 						ContentValues valuesToInsert = new ContentValues();
-						valuesToInsert.put("measuredAt", (((DatePicker) promptView.findViewById(R.id.datePicker)).getYear() + "-" +
+						valuesToInsert.put("measuredAt", ( ((DatePicker) promptView.findViewById(R.id.datePicker)).getYear() + "-" +
 								(((((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() + 1) < 10) ? "0" + (((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth() + 1) : (((DatePicker) promptView.findViewById(R.id.datePicker)).getMonth()) + 1) + "-" +    //This is a little bit tricky, I have to prepend 0 for numbers between 0 and 9.
 								((((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() < 10) ? "0" + ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth() : ((DatePicker) promptView.findViewById(R.id.datePicker)).getDayOfMonth()) + "T" +
 								((((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() < 10) ? "0" + ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour() : ((TimePicker) promptView.findViewById(R.id.timePicker)).getCurrentHour()) + ":" +

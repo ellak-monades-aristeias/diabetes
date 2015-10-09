@@ -29,7 +29,6 @@
     <string name="settings">Settings</string>
     <string name="gpsIsNotEnabledDoYouWantToGoToSettingsMenu">GPS is not enabled. Do you want to go to settings menu?</string>
     <string name="gpsIsSettings">GPS info</string>
-    <string name="meters">" meters"</string>
     <string name="pleaseCheckYourGlucose">"Please check your glucose "</string>
     <string name="pleaseCheckYourGlucoseLevels">Please check your glucose levels</string>
     <string name="stop">Stop</string>
@@ -38,6 +37,7 @@
     <string name="posaIsodynamaYdatan8rakwnYparxoyn">, πόσα ισοδύναμα υδατανθράκων υπάρχουν;</string>
     <string name="nextQuestion">Next Question</string>
     <string name="score">Score</string>
+    <string name="meterString">" meters"</string>
     <string-array name="glucose_time">
     <item><string name="pp">"Before Breakfast"</string></item>
     <item><string name="mp">"After Breakfast"</string></item>

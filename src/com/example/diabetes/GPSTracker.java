@@ -176,20 +176,20 @@ public class GPSTracker extends Service implements LocationListener {
     public void showSettingsAlert(){
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(mContext);
         // Setting Dialog Title
-        alertDialog.setTitle(R.string.gpsIsSettings);
+        alertDialog.setTitle(mContext.getString(R.string.gpsIsSettings));
         // Setting Dialog Message
-        alertDialog.setMessage(R.string.gpsIsNotEnabledDoYouWantToGoToSettingsMenu);
+        alertDialog.setMessage(mContext.getString(R.string.gpsIsNotEnabledDoYouWantToGoToSettingsMenu));
         // Setting Icon to Dialog
         //alertDialog.setIcon(R.drawable.delete);
         // On pressing Settings button
-        alertDialog.setPositiveButton(R.string.settings, new DialogInterface.OnClickListener() {
+        alertDialog.setPositiveButton(mContext.getString(R.string.settings), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                 mContext.startActivity(intent);
             }
         });
         // on pressing cancel button
-        alertDialog.setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
+        alertDialog.setNegativeButton(mContext.getString(R.string.cancel), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 dialog.cancel();
             }
@@ -235,8 +235,8 @@ public class GPSTracker extends Service implements LocationListener {
             isLocationChanged = true;
         }
         distance += getDistance(prevLatitude,prevLongtitude,prevAltitude,latitude,longitude,altitude);
-
-        distanceTextview.setText(String.valueOf(new DecimalFormat("##.##").format(distance)) + getString(R.string.meters) );
+        String meterText = String.valueOf(new DecimalFormat("##.##").format(distance)) + mContext.getString(R.string.meterString);
+        distanceTextview.setText( meterText);
 
         prevLatitude = latitude;
         prevLongtitude = longitude;

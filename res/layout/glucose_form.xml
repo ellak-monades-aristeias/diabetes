@@ -8,7 +8,7 @@
         android:id="@+id/time"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
+        android:layout_below="@+id/timeLabel"
         android:layout_alignParentLeft="true"></Spinner>
 
     <FrameLayout
@@ -42,5 +42,14 @@
         android:layout_marginTop="20sp"
             android:layout_gravity="center" />
     </FrameLayout>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="@string/timeLabel"
+        android:id="@+id/timeLabel"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
 </RelativeLayout>

@@ -47,13 +47,14 @@
     <string name="bedtime">Bedtime</string>
     <string name="max">Max</string>
     <string name="min">Min</string>
+    <string name="timeLabel">Measurement:</string>
     <string-array name="glucose_time">
     <item><string name="pp">"Before Breakfast"</string></item>
     <item><string name="mp">"After Breakfast"</string></item>
     <item><string name="pg">"Before Lunch"</string></item>
     <item><string name="mg">"After Lunch"</string></item>
-    <item><string name="pd">"Before Diner"</string></item>
-    <item><string name="md">"After Diner"</string></item>
+    <item><string name="pd">"Before Dinner"</string></item>
+    <item><string name="md">"After Dinner"</string></item>
     <item><string name="py">"Bedtime"</string></item>
     </string-array>
 

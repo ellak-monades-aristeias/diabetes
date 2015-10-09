@@ -5,12 +5,10 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +27,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.*;
 
-@SuppressLint({ "InflateParams", "SimpleDateFormat", "UseSparseArrays" })
 public class MainActivity extends Activity {
 	SQLiteDatabase db;
 	Times times;
@@ -44,8 +41,11 @@ public class MainActivity extends Activity {
 		distanceInfo = new DistanceInfo();
 		// Creating database and tables
 		db = openOrCreateDatabase("diabetes", Context.MODE_PRIVATE, null);
-	//	db.execSQL("DROP TABLE BloodGlucose;");
-	//	db.execSQL("DROP TABLE InsoulinDose;");
+// TODO: if you are updating an old version, pleae uncomment the following three lines!
+/*		db.execSQL("DROP TABLE IF EXISTS BloodGlucose;");
+		db.execSQL("DROP TABLE IF EXISTS InsoulinDose;");
+		db.execSQL("DROP TABLE IF EXISTS InsoulinTypess;");*/
+
 		db.execSQL("CREATE TABLE IF NOT EXISTS InsoulinDose (givenAt TEXT, dosage double precision, PRIMARY KEY (givenAt) );");
 		db.execSQL("CREATE TABLE IF NOT EXISTS BloodGlucose (measuredAt TEXT, measuredAtType smallint, glucoseValue smallint, PRIMARY KEY (measuredAt));");
 
@@ -56,7 +56,7 @@ public class MainActivity extends Activity {
 
                 Cursor cursor = db.rawQuery("SELECT SUM(ei) AS sei FROM (" +
                         "SELECT dosage AS ei FROM insoulindose " +
-                        "WHERE givenAt BETWEEN datetime('now', 'localtime', '-2 hours') AND datetime('now', 'localtime') " +
+                        "WHERE givenAt BETWEEN datetime('now', 'localtime', '-15 minutes') AND datetime('now', 'localtime') " +
                         "UNION SELECT dosage * 0.8 AS EnergiInsoulini FROM insoulindose WHERE givenAt BETWEEN datetime('now', 'localtime', '-75 minutes') AND datetime('now', 'localtime', '-15 minutes') " +
                         "UNION SELECT dosage * 0.6 AS EnergiInsoulini FROM insoulindose WHERE givenAt BETWEEN datetime('now', 'localtime', '-135 minutes') AND datetime('now', 'localtime', '-75 minutes') " +
                         "UNION SELECT dosage * 0.4 AS EnergiInsoulini FROM insoulindose WHERE givenAt BETWEEN datetime('now', 'localtime', '-195 minutes') AND datetime('now', 'localtime', '-135 minutes') " +
@@ -67,20 +67,16 @@ public class MainActivity extends Activity {
                 cursor.close();
 				LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-				final View promptView = layoutInflater.inflate(R.layout.dosology_form, null);    // Get dosology_form.xml
+				final View promptView = layoutInflater.inflate(R.layout.dosology_form, null);    // Get dosology form
 				((DatePicker) promptView.findViewById(R.id.datePicker)).setSpinnersShown(false);
 				((TimePicker) promptView.findViewById(R.id.timePicker)).setIs24HourView(true);
-
-
-                Calendar c = Calendar.getInstance();
-                ((TimePicker) promptView.findViewById(R.id.timePicker)).setCurrentHour(c.get(Calendar.HOUR_OF_DAY));
-
+                ((TimePicker) promptView.findViewById(R.id.timePicker)).setCurrentHour(Calendar.getInstance().get(Calendar.HOUR_OF_DAY));
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(60);
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(1);
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(10);
 				final android.widget.TextView textViewToChange = (android.widget.TextView) promptView.findViewById(R.id.glucoseUnitID);
 				textViewToChange.setText(R.string.units);
-				alertDialogBuilder.setView(promptView);    // Set dosology_form.xmle the layout file of the alertdialog builder
+				alertDialogBuilder.setView(promptView);    // Set dosology form the layout file of the alert dialog builder
 				alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -116,15 +112,52 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
 				AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
-				final View promptView = layoutInflater.inflate(R.layout.glucose_form, null);    // Get dosology_formview
+				final View promptView = layoutInflater.inflate(R.layout.glucose_form, null);    // Get glucose_form
                 Spinner spinner = (Spinner) promptView.findViewById(R.id.time);
                 ArrayAdapter<CharSequence> adapter = ArrayAdapter.createFromResource(MainActivity.this, R.array.glucose_time, android.R.layout.simple_spinner_item);
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinner.setAdapter(adapter);
+                switch (Calendar.getInstance().get(Calendar.HOUR_OF_DAY))
+                {
+                    case(5):
+                    case(6):
+                    case(7):
+                    case(8):
+                    case(9):
+                        spinner.setSelection(0);
+                        break;
+                    case(10):
+                    case(11):
+                    case(12):
+                        spinner.setSelection(1);
+                        break;
+                    case(13):
+                    case(14):
+                    case(15):
+                        spinner.setSelection(2);
+                        break;
+                    case(16):
+                    case(17):
+                    case(18):
+                        spinner.setSelection(3);
+                        break;
+                    case(19):
+                    case(20):
+                    case(21):
+                        spinner.setSelection(4);
+                        break;
+                    case(22):
+                    case(23):
+                        spinner.setSelection(5);
+                        break;
+                    default:
+                        spinner.setSelection(6);
+                        break;
+                }
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(1000);
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(20);
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(100);
-				alertDialogBuilder.setView(promptView);    // Set dosology_form.xmle the layout file of the alertdialog builder
+				alertDialogBuilder.setView(promptView);    // Set glucose_form the layout file of the alert dialog builder
 				alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
 					public void onClick(DialogInterface dialog, int which) {
@@ -181,30 +214,27 @@ public class MainActivity extends Activity {
 				HashMap<Integer, Integer> dbAvgValues=new HashMap<Integer, Integer>();
 				Cursor cursor = db.rawQuery("SELECT measuredAtType AS Hour, AVG(glucoseValue) AS AVGGlucose FROM BloodGlucose WHERE measuredAt > date('now', 'localtime', '-3 months') GROUP BY measuredAtType ORDER BY measuredAtType;", null);
 				cursor.moveToFirst();
-				while (cursor.isAfterLast() == false) {
+				while (!cursor.isAfterLast()) {
 					dbAvgValues.put(cursor.getInt(cursor.getColumnIndex("Hour")), cursor.getInt(cursor.getColumnIndex("AVGGlucose")));
 					cursor.moveToNext();
 				}
 				cursor.close();
-
                 HashMap<Integer, Integer> dbMaxValues=new HashMap<Integer, Integer>();
                 cursor = db.rawQuery("SELECT measuredAtType AS Hour, MAX(glucoseValue) AS AVGGlucose FROM BloodGlucose WHERE measuredAt > date('now', 'localtime', '-3 months') GROUP BY measuredAtType ORDER BY measuredAtType;", null);
                 cursor.moveToFirst();
-                while (cursor.isAfterLast() == false) {
+                while (!cursor.isAfterLast()) {
                     dbMaxValues.put(cursor.getInt(cursor.getColumnIndex("Hour")), cursor.getInt(cursor.getColumnIndex("AVGGlucose")));
                     cursor.moveToNext();
                 }
                 cursor.close();
-
                 HashMap<Integer, Integer> dbMinValues=new HashMap<Integer, Integer>();
                 cursor = db.rawQuery("SELECT measuredAtType AS Hour, MIN(glucoseValue) AS AVGGlucose FROM BloodGlucose WHERE measuredAt > date('now', 'localtime', '-3 months') GROUP BY measuredAtType ORDER BY measuredAtType;", null);
                 cursor.moveToFirst();
-                while (cursor.isAfterLast() == false) {
+                while (!cursor.isAfterLast()) {
                     dbMinValues.put(cursor.getInt(cursor.getColumnIndex("Hour")), cursor.getInt(cursor.getColumnIndex("AVGGlucose")));
                     cursor.moveToNext();
                 }
                 cursor.close();
-
 				Intent intent = new Intent(MainActivity.this, PlotActivity.class);
 				intent.putExtra("avgValuesHashMap", dbAvgValues);
                 intent.putExtra("maxValuesHashMap", dbMaxValues);

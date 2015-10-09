@@ -33,8 +33,7 @@
     <string name="pleaseCheckYourGlucoseLevels">Please check your glucose levels</string>
     <string name="stop">Stop</string>
     <string name="start">Start</string>
-    <string name="se">"Σε "</string>
-    <string name="posaIsodynamaYdatan8rakwnYparxoyn">, πόσα ισοδύναμα υδατανθράκων υπάρχουν;</string>
+    <string name="posaIsodynamaYdatan8rakwnYparxoyn">How many carbohydrates exist in </string>
     <string name="nextQuestion">Next Question</string>
     <string name="score">Score</string>
     <string name="meterString">" meters"</string>

@@ -74,8 +74,6 @@ public class MainActivity extends Activity {
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setMaxValue(60);
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setMinValue(1);
 				((NumberPicker) promptView.findViewById(R.id.measurement)).setValue(10);
-				final android.widget.TextView textViewToChange = (android.widget.TextView) promptView.findViewById(R.id.glucoseUnitID);
-				textViewToChange.setText(R.string.units);
 				alertDialogBuilder.setView(promptView);    // Set dosology form the layout file of the alert dialog builder
 				alertDialogBuilder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 					@Override
@@ -289,8 +287,14 @@ public class MainActivity extends Activity {
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
 		int id = item.getItemId();
-		if (id == R.id.action_settings) {
-			// TODO: put the needed code over here
+		if (id == R.id.about) {
+			LayoutInflater layoutInflater = LayoutInflater.from(MainActivity.this);
+			AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(MainActivity.this);
+			final View promptView = layoutInflater.inflate(R.layout.about, null);    // Get dosology form
+			alertDialogBuilder.setView(promptView);
+			alertDialogBuilder.setCancelable(true);
+			AlertDialog alertD = alertDialogBuilder.create();    // Create an alert dialog
+			alertD.show();
 			return true;
 		}
 		return super.onOptionsItemSelected(item);

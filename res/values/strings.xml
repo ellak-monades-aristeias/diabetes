@@ -4,17 +4,15 @@
     <string name="app_name">diabetes</string>
     <string name="action_settings">Settings</string>
     <string name="blood_measurements">Blood Measurements</string>
-    <string name="nutrition_information">Nutrition Information</string>
-    <string name="workout_information">Workout Information</string>
+    <string name="nutrition_information">Nutrition game </string>
+    <string name="workout_information">Workout</string>
     <string name="close">Close</string>
-    <string name="data_of_a_blood_glucose_measurement_">Data of a blood glucose measurement.</string>
     <string name="blood_glucose_stats">Blood Glucose Stats</string>
     <string name="display_charts_of_measurements_">Display charts of measurements.</string>
     <string name="title_activity_plot">PlotActivity</string>
     <string name="title_activity_workout">Workout Activity</string>
     <string name="title_activity_nutrition">Nutrition Activity</string>
     <string name="timesTitle">Time</string>
-    <string name="glucoseTitle">Glucose</string>
     <string name="insulinbtn">New insulin dosage</string>
     <string name="locationService">Location Service</string>
     <string name="yourCurrentInsoulinIs">"Your current insoulin is: "</string>
@@ -26,6 +24,7 @@
     <string name="glucose">Glucose</string>
     <string name="average">Avg</string>
     <string name="units">Units</string>
+    <string name="glucoseTitle">Glucose</string>
     <string name="settings">Settings</string>
     <string name="gpsIsNotEnabledDoYouWantToGoToSettingsMenu">GPS is not enabled. Do you want to go to settings menu?</string>
     <string name="gpsIsSettings">GPS info</string>
@@ -47,6 +46,8 @@
     <string name="max">Max</string>
     <string name="min">Min</string>
     <string name="timeLabel">Measurement:</string>
+    <string name="us">Petros Manousis\npmanousis@gmail.com\n\nThanos Pappas\nthanospappas0@gmail.com\n\nMikela Kakarantza\nmikela.kakarantza@gmail.com\n\nGiorgos Zachos\ngzzachos@gmail.com\n\n\nSpecial thanks:\nDr. Vasileios Tsimichodimos\nFor his help and advice.</string>
+    <string name="about">About</string>
     <string-array name="glucose_time">
     <item><string name="pp">"Before Breakfast"</string></item>
     <item><string name="mp">"After Breakfast"</string></item>

@@ -19,10 +19,10 @@
     <string name="errorInInsoulinDoseInsertion">Error in insoulin dose insertion</string>
     <string name="cancel">Cancel</string>
     <string name="errorInBloodGlucoseInsertion">Error in blood glucose insertion</string>
-    <string name="glucoseProfile">Glugose profile</string>
+    <string name="glucoseProfile" translatable="false">Glugose profile</string>
     <string name="hour">Hour</string>
     <string name="glucose">Glucose</string>
-    <string name="average">Avg</string>
+    <string name="average" translatable="false">Avg</string>
     <string name="units">Units</string>
     <string name="glucoseTitle">Glucose</string>
     <string name="settings">Settings</string>
@@ -43,11 +43,54 @@
     <string name="dinner">Dinner</string>
     <string name="afterDinner">After dinner</string>
     <string name="bedtime">Bedtime</string>
-    <string name="max">Max</string>
-    <string name="min">Min</string>
+    <string name="max" translatable="false">Max</string>
+    <string name="min" translatable="false">Min</string>
     <string name="timeLabel">Measurement:</string>
-    <string name="us">Petros Manousis\npmanousis@gmail.com\n\nThanos Pappas\nthanospappas0@gmail.com\n\nMikela Kakarantza\nmikela.kakarantza@gmail.com\n\nGiorgos Zachos\ngzzachos@gmail.com\n\n\nSpecial thanks:\nDr. Vasileios Tsimichodimos\nFor his help and advice.</string>
+    <string name="us" translatable="false">Petros Manousis\npmanousis@gmail.com\n\nThanos Pappas\nthanospappas0@gmail.com\n\nMikela Kakarantza\nmikela.kakarantza@gmail.com\n\nGiorgos Zachos\ngzzachos@gmail.com\n\n\nSpecial thanks:\nDr. Vasileios Tsimichodimos\nFor his help and advice.</string>
     <string name="about">About</string>
+    <string name="questionmark">\?</string>
+    <string name="chickpeas">a serving of CHICKPEAS (around 300g)?</string>
+    <string name="icecream">an ICE CREAM CONE (around 85g)?</string>
+    <string name="calamari">a serving of CALAMARI(squids) (around 120g)?</string>
+    <string name="lentils">a serving of LENTILS (around 150g)?</string>
+    <string name="peas">a serving of PEAS (around 300g)?</string>
+    <string name="spinachrice">a serving of SPINACH WITH RICE (around 200g) (Greek Cuisine)</string>
+    <string name="stuffedtomatoes">a serving of STUFFED TOMATOES/PEPPERS WITH RICE (around 250g) (Greek Cuisine)</string>
+    <string name="briam">a serving of BRIAM (around 250g) (Greek Cuisine)</string>
+    <string name="dolmades">μa serving of DOLMADES/STUFFED GRAPE LEAVES (around 100g) (Greek Cuisine)</string>
+    <string name="greenbeans">a serving of FRESH/GREEN BEANS (around 250g)</string>
+    <string name="lasagne">a large serving of LASAGNE WITH MEAT (around 454g) (Italian Cuisine)</string>
+    <string name="lasagnesmall">a small serving of LASAGNE WITH MEAT (around 284g) (Italian Cuisine)</string>
+    <string name="tiramisu">a piece of TIRAMISU (around 141.75g) (Italian Cuisine)</string>
+    <string name="friedrice">a large serving of FRIED RICE (around 454g) (Chinese Cuisine)</string>
+    <string name="springroll">a medium sized SPRING ROLL (around 85.0g) (Chinese Cuisine)</string>
+    <string name="cabbageroll">a CABBAGE ROLL (around 85g) (Lebanese Cuisine)</string>
+    <string name="shawourma">a serving of SHAWOURMA (ROAST BEEF, around 113.0g) (Lebanese Cuisine)</string>
+    <string name="spinachpie">a piece of SPINACH PIE (around 99.0g) (Lebanese Cuisine)</string>
+    <string name="tabbouleh"> a serving of TABBOULEH (around 113.0g)</string>
+    <string name="pepperonipizza">a serving of PIZZA PEPPERONI CLASSIC (around 78.0g)</string>
+    <string name="porkmorsels">a serving of HOT MORSELS OF PORK (around 100.0g)</string>
+    <string name="chickenkickers">a serving of CHICKEN KICKERS (around 100.0g)</string>
+    <string name="cookies">100.0g of COOKIES</string>
+    <string name="pancakes">100.0g of MINI PANCAKES</string>
+    <string name="roastchicken">a serving of ROAST CHICKEN FILLET (around 80.0g)</string>
+    <string name="burger">a BURGER/MEAT PATTY (around 75.0g)</string>
+    <string name="oreganosausage">a serving of SAUSAGE WITH OREGANO (around 100.0g)</string>
+    <string name="salmon">a serving of SALMON (around 30.0g)</string>
+    <string name="mushrooms">a serving of FRESH MUSHROOMS (around 50.0g)</string>
+    <string name="egg">a 50.0g EGG</string>
+    <string name="walnuts">20.0g of WALNUTS</string>
+    <string name="omelet">a serving of OMELET (around 70.0g)</string>
+    <string name="frenchfries">60.0g of FRENCH FRIES</string>
+    <string name="caesars">a serving of CAESAR\' S  SALAD (around 230.0g)</string>
+    <string name="greeksalad">a serving of GREEK SALAD (around 230.0g)</string>
+    <string name="arabicpita">an ARABIC PITA (around 100g)</string>
+    <string name="breadroll">a ROUND BREAD ROLL (around 120g) from Thessaloniki, Greece</string>
+    <string name="cheeseburger">a CHEESE BURGER (around 176g)</string>
+    <string name="goodysclub">a Goody’s CLUB SANDWICH (around 340g)</string>
+    <string name="bigmac">a BIG MAC (around 221g)</string>
+    <string name="mcchicken">a McChicken (around 220g)</string>
+    <string name="milkshake">a CHOCOLATE MILKSHAKE (around 400ml)</string>
     <string-array name="glucose_time">
     <item><string name="pp">"Before Breakfast"</string></item>
     <item><string name="mp">"After Breakfast"</string></item>

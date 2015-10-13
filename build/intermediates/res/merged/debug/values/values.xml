@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/home/pmanousi/StudioProjects/diabetes/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="glucose_time">
-    <item><string name="pp">"Before Breakfast"</string></item>
-    <item><string name="mp">"After Breakfast"</string></item>
-    <item><string name="pg">"Before Lunch"</string></item>
-    <item><string name="mg">"After Lunch"</string></item>
-    <item><string name="pd">"Before Diner"</string></item>
-    <item><string name="md">"After Diner"</string></item>
-    <item><string name="py">"Bedtime"</string></item>
+    <item>@string/pp</item>
+    <item>@string/mp</item>
+    <item>@string/pg</item>
+    <item>@string/mg</item>
+    <item>@string/pd</item>
+    <item>@string/md</item>
+    <item>@string/py</item>
     </string-array>
-    <!-- From: file:/home/pmanousi/StudioProjects/diabetes/res/values/dimens.xml -->
+    <!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/values/dimens.xml -->
     <eat-comment/>
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
@@ -22,55 +22,106 @@
     <dimen name="range_label_font_size">13dp</dimen>
     <dimen name="range_tick_label_font_size">15dp</dimen>
     <dimen name="title_font_size">20dp</dimen>
-    <!-- From: file:/home/pmanousi/StudioProjects/diabetes/res/values/strings.xml -->
+    <!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/values/strings.xml -->
     <eat-comment/>
+    <string name="about">About</string>
     <string name="action_settings">Settings</string>
     <string name="afterBreakfast">After breakfast</string>
     <string name="afterDinner">After dinner</string>
     <string name="afterLunch">After lunch</string>
     <string name="app_name">diabetes</string>
+    <string name="arabicpita">an ARABIC PITA (around 100g)</string>
     <string name="average">Avg</string>
     <string name="bedtime">Bedtime</string>
+    <string name="bigmac">a BIG MAC (around 221g)</string>
     <string name="blood_glucose_stats">Blood Glucose Stats</string>
     <string name="blood_measurements">Blood Measurements</string>
+    <string name="breadroll">a ROUND BREAD ROLL (around 120g) from Thessaloniki, Greece</string>
     <string name="breakfast">Breakfast</string>
+    <string name="briam">a serving of BRIAM (around 250g) (Greek Cuisine)</string>
+    <string name="burger">a BURGER/MEAT PATTY (around 75.0g)</string>
+    <string name="cabbageroll">a CABBAGE ROLL (around 85g) (Lebanese Cuisine)</string>
+    <string name="caesars">a serving of CAESAR\' S  SALAD (around 230.0g)</string>
+    <string name="calamari">a serving of CALAMARI(squids) (around 120g)?</string>
     <string name="cancel">Cancel</string>
+    <string name="cheeseburger">a CHEESE BURGER (around 176g)</string>
+    <string name="chickenkickers">a serving of CHICKEN KICKERS (around 100.0g)</string>
+    <string name="chickpeas">a serving of CHICKPEAS (around 300g)?</string>
     <string name="close">Close</string>
-    <string name="data_of_a_blood_glucose_measurement_">Data of a blood glucose measurement.</string>
+    <string name="cookies">100.0g of COOKIES</string>
     <string name="dinner">Dinner</string>
     <string name="display_charts_of_measurements_">Display charts of measurements.</string>
+    <string name="dolmades">μa serving of DOLMADES/STUFFED GRAPE LEAVES (around 100g) (Greek Cuisine)</string>
+    <string name="egg">a 50.0g EGG</string>
     <string name="errorInBloodGlucoseInsertion">Error in blood glucose insertion</string>
     <string name="errorInInsoulinDoseInsertion">Error in insoulin dose insertion</string>
+    <string name="frenchfries">60.0g of FRENCH FRIES</string>
+    <string name="friedrice">a large serving of FRIED RICE (around 454g) (Chinese Cuisine)</string>
     <string name="glucose">Glucose</string>
     <string name="glucoseProfile">Glugose profile</string>
     <string name="glucoseTitle">Glucose</string>
+    <string name="goodysclub">a Goody’s CLUB SANDWICH (around 340g)</string>
     <string name="gpsIsNotEnabledDoYouWantToGoToSettingsMenu">GPS is not enabled. Do you want to go to settings menu?</string>
     <string name="gpsIsSettings">GPS info</string>
+    <string name="greeksalad">a serving of GREEK SALAD (around 230.0g)</string>
+    <string name="greenbeans">a serving of FRESH/GREEN BEANS (around 250g)</string>
     <string name="hour">Hour</string>
+    <string name="icecream">an ICE CREAM CONE (around 85g)?</string>
     <string name="insulinbtn">New insulin dosage</string>
+    <string name="lasagne">a large serving of LASAGNE WITH MEAT (around 454g) (Italian Cuisine)</string>
+    <string name="lasagnesmall">a small serving of LASAGNE WITH MEAT (around 284g) (Italian Cuisine)</string>
+    <string name="lentils">a serving of LENTILS (around 150g)?</string>
     <string name="locationService">Location Service</string>
     <string name="lunch">Lunch</string>
     <string name="max">Max</string>
+    <string name="mcchicken">a McChicken (around 220g)</string>
+    <string name="md">"After Dinner"</string>
     <string name="meterString">" meters"</string>
+    <string name="mg">"After Lunch"</string>
+    <string name="milkshake">a CHOCOLATE MILKSHAKE (around 400ml)</string>
     <string name="min">Min</string>
+    <string name="mp">"After Breakfast"</string>
+    <string name="mushrooms">a serving of FRESH MUSHROOMS (around 50.0g)</string>
     <string name="nextQuestion">Next Question</string>
-    <string name="nutrition_information">Nutrition Information</string>
+    <string name="nutrition_information">Nutrition game </string>
+    <string name="omelet">a serving of OMELET (around 70.0g)</string>
+    <string name="oreganosausage">a serving of SAUSAGE WITH OREGANO (around 100.0g)</string>
+    <string name="pancakes">100.0g of MINI PANCAKES</string>
+    <string name="pd">"Before Dinner"</string>
+    <string name="peas">a serving of PEAS (around 300g)?</string>
+    <string name="pepperonipizza">a serving of PIZZA PEPPERONI CLASSIC (around 78.0g)</string>
+    <string name="pg">"Before Lunch"</string>
     <string name="pleaseCheckYourGlucose">"Please check your glucose "</string>
     <string name="pleaseCheckYourGlucoseLevels">Please check your glucose levels</string>
-    <string name="posaIsodynamaYdatan8rakwnYparxoyn">, πόσα ισοδύναμα υδατανθράκων υπάρχουν;</string>
+    <string name="porkmorsels">a serving of HOT MORSELS OF PORK (around 100.0g)</string>
+    <string name="posaIsodynamaYdatan8rakwnYparxoyn">"How many carbohydrates exist in "</string>
+    <string name="pp">Before Breakfast</string>
+    <string name="py">"Bedtime"</string>
+    <string name="questionmark">\?</string>
+    <string name="roastchicken">a serving of ROAST CHICKEN FILLET (around 80.0g)</string>
+    <string name="salmon">a serving of SALMON (around 30.0g)</string>
     <string name="score">Score</string>
-    <string name="se">"Σε "</string>
     <string name="settings">Settings</string>
+    <string name="shawourma">a serving of SHAWOURMA (ROAST BEEF, around 113.0g) (Lebanese Cuisine)</string>
+    <string name="spinachpie">a piece of SPINACH PIE (around 99.0g) (Lebanese Cuisine)</string>
+    <string name="spinachrice">a serving of SPINACH WITH RICE (around 200g) (Greek Cuisine)</string>
+    <string name="springroll">a medium sized SPRING ROLL (around 85.0g) (Chinese Cuisine)</string>
     <string name="start">Start</string>
     <string name="stop">Stop</string>
+    <string name="stuffedtomatoes">a serving of STUFFED TOMATOES/PEPPERS WITH RICE (around 250g) (Greek Cuisine)</string>
+    <string name="tabbouleh"> a serving of TABBOULEH (around 113.0g)</string>
+    <string name="timeLabel">Measurement:</string>
     <string name="timesTitle">Time</string>
+    <string name="tiramisu">a piece of TIRAMISU (around 141.75g) (Italian Cuisine)</string>
     <string name="title_activity_nutrition">Nutrition Activity</string>
     <string name="title_activity_plot">PlotActivity</string>
     <string name="title_activity_workout">Workout Activity</string>
     <string name="units">Units</string>
-    <string name="workout_information">Workout Information</string>
+    <string name="us">Petros Manousis\npmanousis@gmail.com\n\nThanos Pappas\nthanospappas0@gmail.com\n\nMikela Kakarantza\nmikela.kakarantza@gmail.com\n\nGiorgos Zachos\ngzzachos@gmail.com\n\n\nSpecial thanks:\nDr. Vasileios Tsimichodimos\nFor his help and advice.</string>
+    <string name="walnuts">20.0g of WALNUTS</string>
+    <string name="workout_information">Workout</string>
     <string name="yourCurrentInsoulinIs">"Your current insoulin is: "</string>
-    <!-- From: file:/home/pmanousi/StudioProjects/diabetes/res/values/styles.xml -->
+    <!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/values/styles.xml -->
     <eat-comment/>
     <style name="AppBaseTheme" parent="android:Theme.Light">
         <!--

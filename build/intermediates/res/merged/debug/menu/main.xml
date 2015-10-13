@@ -3,10 +3,8 @@
     tools:context="com.example.diabetes.MainActivity" >
 
     <item
-        android:id="@+id/action_settings"
-        android:orderInCategory="100"
-        android:showAsAction="never"
-        android:title="@string/action_settings"/>
+        android:id="@+id/about"
+        android:title="@string/about"/>
 
 </menu>
-<!-- From: file:/home/pmanousi/StudioProjects/diabetes/res/menu/main.xml -->
+<!-- From: file:/C:/Users/mixail/Desktop/diabetes/res/menu/main.xml -->

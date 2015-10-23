@@ -18,3 +18,12 @@ This project was developed by: Petros Manousis (pmanousis@gmail.com), Thanos Pap
 
 Special thanks to: Dr. Vasileios Tsimichodimos for his help and advice.
  
+Deliverables
+-----
+The links that follow have the source code of the files that implement the deliverable parts.
+
+* [Deliverable 1] (https://github.com/ellak-monades-aristeias/diabetes/blob/master/src/com/example/diabetes/MainActivity.java)
+* [Deliverable 2] (https://github.com/ellak-monades-aristeias/diabetes/blob/master/src/com/example/diabetes/Nutrition.java)
+* [Deliverable 3] (https://github.com/ellak-monades-aristeias/diabetes/blob/master/src/com/example/diabetes/WorkoutActivity.java)
+* [Greek translation] (https://github.com/ellak-monades-aristeias/diabetes/blob/master/res/values-el/strings.xml)
+* [English translation] (https://github.com/ellak-monades-aristeias/diabetes/blob/master/res/values/strings.xml)
